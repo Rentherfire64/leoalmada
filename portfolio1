@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Nombre | Desarrollador Web Freelance</title>
+    <link rel="stylesheet" href="style1.css">
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">MiPortfolio</div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#portafolio">Portafolio</a></li>
+            <li><a href="#contacto" class="btn-primary">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <header id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Transformo tus ideas en <span class="highlight">Sitios Web</span> que venden.</h1>
+            <p>Diseño moderno, optimizado para Google y adaptable a móviles.</p>
+            <a href="#portafolio" class="btn-secondary">Ver mis proyectos</a>
+        </div>
+    </header>
+
+    <section id="servicios" class="services">
+        <h2>Lo que ofrezco</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Diseño UX/UI</h3>
+                <p>Páginas intuitivas que guían al cliente hacia la compra.</p>
+            </div>
+            <div class="service-card">
+                <h3>Desarrollo Web</h3>
+                <p>Sitios rápidos y seguros usando las últimas tecnologías.</p>
+            </div>
+            <div class="service-card">
+                <h3>SEO & Optimización</h3>
+                <p>Aparece en los primeros resultados de búsqueda de Google.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portafolio" class="portfolio">
+        <h2>Proyectos Destacados</h2>
+        <div class="portfolio-grid">
+            <div class="project-item">
+                <img src="https://via.placeholder.com/400x250" alt="Proyecto 1">
+                <div class="project-info">
+                    <h4>E-commerce de Ropa</h4>
+                    <p>Tienda online con pagos integrados.</p>
+                </div>
+            </div>
+            <div class="project-item">
+                <img src="https://via.placeholder.com/400x250" alt="Proyecto 2">
+                <div class="project-info">
+                    <h4>Página para Abogados</h4>
+                    <p>Landing page corporativa de alta conversión.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <h2>¿Listo para digitalizar tu negocio?</h2>
+        <p>Hablemos sobre tu próximo proyecto.</p>
+        <form id="contact-form">
+            <input type="text" placeholder="Tu Nombre" required>
+            <input type="email" placeholder="Tu Email" required>
+            <textarea placeholder="Cuéntame sobre tu proyecto" rows="5" required></textarea>
+            <button type="submit" class="btn-primary">Enviar Mensaje</button>
+        </form>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
