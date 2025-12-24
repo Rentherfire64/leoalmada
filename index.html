@@ -3,47 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Sitio - Blog Personal</title>
-    <link rel="stylesheet" href="styles.css"> 
+    <title>Leo Almada | Blog & Personal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 selection:bg-blue-100 selection:text-blue-600">
 
-    <header>
-        <h4>Bienvenido a mi Blog Personal</h4>
-         <h1>En Mantenimiento</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="mio.html">Acerca de mí</a></li>
+    <header class="sticky top-0 z-50 glass border-b border-slate-200">
+        <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
+                <span class="font-extrabold tracking-tighter text-xl">LEO ALMADA</span>
+            </div>
+            <ul class="flex gap-6 text-sm font-semibold text-slate-600">
+                <li><a href="index.html" class="text-blue-600">Inicio</a></li>
+                <li><a href="mio.html" class="hover:text-blue-600 transition">Acerca de mí</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section id="introduccion">
-            <h2>¡Hola a todos!</h2>
-            <p>
-                Este es el contenido de mi nuevo sitio web. 
-                Aquí compartiré pensamientos, proyectos y mucho más.
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        
+        <div class="mb-16 p-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl">
+            <div class="bg-white p-8 rounded-[14px] text-center">
+                <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full uppercase tracking-widest">Aviso</span>
+                <h1 class="text-4xl font-black mt-4 mb-2 tracking-tight">Sitio en Mantenimiento</h1>
+                <p class="text-slate-500">Estamos trabajando para ofrecerte una mejor experiencia educativa y digital.</p>
+            </div>
+        </div>
+
+        <section id="introduccion" class="mb-20 text-center md:text-left">
+            <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 justify-center md:justify-start">
+                <span class="w-10 h-1 text-blue-600 bg-blue-600 rounded-full hidden md:block"></span>
+                ¡Hola a todos!
+            </h2>
+            <p class="text-xl text-slate-600 leading-relaxed max-w-2xl">
+                Bienvenidos a mi nuevo espacio digital. Aquí compartiré pensamientos sobre 
+                <span class="text-slate-900 font-semibold underline decoration-blue-500">docencia</span>, 
+                proyectos de <span class="text-slate-900 font-semibold underline decoration-green-500">desarrollo web</span> 
+                y mucho más.
             </p>
         </section>
 
         <section id="ultimo-post">
-            <h2>Mi Última Publicación</h2>
-            <article>
-                <h3>Título del Post</h3>
-                <p class="fecha">Publicado 3/12/2025</p>
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-extrabold tracking-tight">Mi Última Publicación</h2>
+                <a href="#" class="text-sm font-bold text-blue-600 hover:underline">Ver todas →</a>
+            </div>
+
+            <article class="group relative bg-white border border-slate-200 p-8 rounded-3xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-2">Desarrollo & Educación</p>
+                        <h3 class="text-2xl font-bold group-hover:text-blue-600 transition-colors">Título del Post: El futuro de la tecnología en el aula</h3>
+                        <p class="mt-3 text-slate-500 leading-relaxed">
+                            Un breve adelanto de lo que estaré compartiendo próximamente en este blog personal...
+                        </p>
+                    </div>
+                    <div class="shrink-0">
+                        <p class="fecha text-sm font-medium text-slate-400 bg-slate-50 px-4 py-2 rounded-xl inline-block">
+                            <i class="far fa-calendar-alt mr-2"></i>3/12/2025
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t border-slate-100 flex items-center text-blue-600 font-bold text-sm">
+                    Leer más <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-2"></i>
+                </div>
             </article>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Leo Almada.     Todos los derechos reservados.</p>
-        </footer>
+    <footer class="mt-20 border-t border-slate-200 py-12 bg-white">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-sm font-medium">
+                &copy; 2025 <span class="text-slate-900 font-bold">Leo Almada</span>. Todos los derechos reservados.
+            </p>
+            <div class="flex gap-6">
+                <a href="#" class="text-slate-400 hover:text-blue-600 transition text-xl"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-slate-400 hover:text-slate-900 transition text-xl"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-slate-400 hover:text-red-500 transition text-xl"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
 
 </body>
-
 </html>
-
-
-
