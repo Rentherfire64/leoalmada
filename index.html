@@ -23,6 +23,11 @@
             <ul class="flex gap-6 text-sm font-semibold text-slate-600">
                 <li><a href="index.html" class="text-blue-600">Inicio</a></li>
                 <li><a href="mio.html" class="hover:text-blue-600 transition">Acerca de mí</a></li>
+                <li>
+                    <button onclick="abrirModal()" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition text-sm flex items-center gap-2">
+                        <i class="fas fa-lock text-xs"></i> Área Clientes
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -90,6 +95,74 @@
             </div>
         </div>
     </footer>
-
+    <div id="modalClave" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-slate-200">
+        <div class="text-center mb-6">
+            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-user-tie text-xl"></i>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Acceso Profesional</h2>
+            <p class="text-sm text-slate-500 mt-1">Ingresa la clave para ver el portfolio de servicios.</p>
+        </div>
+        
+        <input type="password" id="inputClave" 
+               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all mb-4 text-center tracking-widest"
+               placeholder="········">
+        
+        <div class="flex flex-col gap-2">
+            <button onclick="validarClave()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">
+                Entrar al Portafolio
+            </button>
+            <button onclick="cerrarModal()" class="w-full text-slate-400 text-sm font-semibold py-2 hover:text-slate-600">
+                Cancelar
+            </button>
+        </div>
+        <p id="errorTexto" class="text-red-500 text-xs font-bold mt-4 text-center hidden">Clave incorrecta. Inténtalo de nuevo.</p>
+    </div>
+</div>
 </body>
+<script>
+    const modal = document.getElementById('modalClave');
+    const input = document.getElementById('inputClave');
+    const error = document.getElementById('errorTexto');
+
+    function abrirModal() {
+        modal.classList.remove('hidden');
+        input.focus();
+    }
+
+    function cerrarModal() {
+        modal.classList.add('hidden');
+        input.value = '';
+        error.classList.add('hidden');
+    }
+
+    function validarClave() {
+        // AQUÍ ELIGES TU CLAVE
+        const claveSecreta = "LeoVentas2025"; 
+
+        if (input.value === claveSecreta) {
+            // Si es correcta, redirige al archivo de ventas
+            window.location.href = "portfolio1.html";
+        } else {
+            // Si es incorrecta, muestra error
+            error.classList.remove('hidden');
+            input.classList.add('border-red-500');
+            
+            // Efecto de sacudida (opcional)
+            input.classList.add('animate-bounce');
+            setTimeout(() => {
+                input.classList.remove('animate-bounce');
+            }, 500);
+        }
+    }
+
+    // Permitir entrar presionando la tecla "Enter"
+    input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            validarClave();
+        }
+    });
+</script>
 </html>
+
