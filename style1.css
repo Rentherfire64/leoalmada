@@ -78,6 +78,8 @@ nav {
     color: white;
     text-decoration: none;
     border-radius: 5px;
+    display: inline-block; /* Asegura que el margen funcione correctamente */
+    margin-top: 30px;      /* Ajusta este número (20px, 30px, 40px) hasta que te guste */
 }
 
 /* Servicios y Portafolio */
@@ -123,4 +125,10 @@ input, textarea {
     border: none;
     background: #1e293b;
     color: white;
+}
+
+@media (max-width: 768px) {
+    .hero-content .btn-secondary {
+        margin-top: 45px; /* Un espacio mayor solo para celulares */
+    }
 }
