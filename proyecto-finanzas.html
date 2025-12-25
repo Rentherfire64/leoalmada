@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyFinances | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --dark-blue: #1a202c;
+            --medium-blue: #2d3748;
+            --light-blue: #4a5568;
+            --accent-green: #38bdf8; /* Manteniendo el azul de tu portfolio */
+            --text-white: #e2e8f0;
+            --text-gray: #a0aec0;
+            --red-expense: #ef4444;
+            --green-income: #22c55e;
+            --orange-warning: #f97316;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--dark-blue);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--medium-blue);
+            padding: 30px 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            margin-bottom: 40px;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .sidebar nav ul li {
+            margin-bottom: 20px;
+        }
+        .sidebar nav ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .sidebar nav ul li a:hover,
+        .sidebar nav ul li a.active {
+            background-color: var(--light-blue);
+            color: var(--text-white);
+        }
+        .sidebar nav ul li a i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        .back-to-portfolio {
+            display: inline-block;
+            margin-top: auto; /* Empuja el botón al final del sidebar */
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .back-to-portfolio:hover { color: var(--accent-green); }
+
+
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-green);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background-color: var(--medium-blue);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+        }
+        .stat-card .icon {
+            font-size: 1.8rem;
+            color: var(--accent-green);
+        }
+        .stat-card h3 {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin: 0;
+        }
+        .stat-card p {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        .stat-card.income p { color: var(--green-income); }
+        .stat-card.expense p { color: var(--red-expense); }
+        .stat-card.balance p { color: var(--text-white); }
+        .stat-card .trend-indicator {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        .stat-card .trend-indicator.up { color: var(--green-income); }
+        .stat-card .trend-indicator.down { color: var(--red-expense); }
+        .stat-card .trend-indicator i { margin-left: 5px; }
+
+        /* Charts & Transactions */
+        .charts-transactions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .chart-card, .transactions-card {
+            background-color: var(--medium-blue);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .chart-card h3, .transactions-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-blue);
+        }
+        .transaction-item:last-child { border-bottom: none; }
+        .transaction-info h4 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .transaction-info p {
+            margin: 5px 0 0 0;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        .transaction-amount {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .transaction-amount.expense { color: var(--red-expense); }
+        .transaction-amount.income { color: var(--green-income); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; padding-bottom: 20px; flex-direction: row; justify-content: space-around; flex-wrap: wrap; }
+            .sidebar .logo { margin-bottom: 0; margin-right: 30px; }
+            .sidebar nav ul { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+            .sidebar nav ul li { margin-bottom: 0; margin: 0 10px; }
+            .sidebar nav ul li a { padding: 8px 12px; }
+            .back-to-portfolio { margin-top: 0; margin-left: 30px; }
+            .charts-transactions-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .header h1 { margin-bottom: 0; }
+            .sidebar .logo { margin-right: 0; margin-bottom: 20px; }
+            .sidebar nav ul { margin-top: 0; }
+            .sidebar { flex-direction: column; align-items: center; }
+            .back-to-portfolio { margin-left: 0; margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">MyFinances</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-wallet"></i> Cuentas</a></li>
+                    <li><a href="#"><i class="fas fa-exchange-alt"></i> Transacciones</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Reportes</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </nav>
+            <a href="index.html#portafolio" class="back-to-portfolio"><i class="fas fa-arrow-left"></i> Volver al Portfolio</a>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Hola, RentComp!</h1>
+                <div class="user-profile">
+                    <span>Marzo 2025</span>
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User Avatar">
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card income">
+                    <span class="icon"><i class="fas fa-arrow-alt-circle-up"></i></span>
+                    <h3>Ingresos Totales</h3>
+                    <p>$ 3,500.00</p>
+                    <span class="trend-indicator up">+5.2% <i class="fas fa-caret-up"></i></span>
+                </div>
+                <div class="stat-card expense">
+                    <span class="icon"><i class="fas fa-arrow-alt-circle-down"></i></span>
+                    <h3>Gastos Totales</h3>
+                    <p>$ 1,200.00</p>
+                    <span class="trend-indicator down">-2.1% <i class="fas fa-caret-down"></i></span>
+                </div>
+                <div class="stat-card balance">
+                    <span class="icon"><i class="fas fa-money-bill-wave"></i></span>
+                    <h3>Balance Actual</h3>
+                    <p>$ 2,300.00</p>
+                    <span class="trend-indicator up">+3.1% <i class="fas fa-caret-up"></i></span>
+                </div>
+            </div>
+
+            <div class="charts-transactions-grid">
+                <div class="chart-card">
+                    <h3>Gastos por Categoría</h3>
+                    <canvas id="expensesChart"></canvas>
+                </div>
+                <div class="transactions-card">
+                    <h3>Últimas Transacciones</h3>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Pago de Alquiler</h4>
+                            <p>01 Mar, 2025</p>
+                        </div>
+                        <span class="transaction-amount expense">-$800.00</span>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Salario Mensual</h4>
+                            <p>28 Feb, 2025</p>
+                        </div>
+                        <span class="transaction-amount income">+$3,000.00</span>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Compras Supermercado</h4>
+                            <p>27 Feb, 2025</p>
+                        </div>
+                        <span class="transaction-amount expense">-$150.00</span>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Freelance Project</h4>
+                            <p>25 Feb, 2025</p>
+                        </div>
+                        <span class="transaction-amount income">+$500.00</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Chart.js para el gráfico de gastos
+        const ctx = document.getElementById('expensesChart').getContext('2d');
+        const expensesChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Vivienda', 'Alimentos', 'Transporte', 'Entretenimiento', 'Otros'],
+                datasets: [{
+                    data: [35, 25, 15, 10, 15], // Porcentajes
+                    backgroundColor: [
+                        '#ef4444', // Red
+                        '#f97316', // Orange
+                        '#22c55e', // Green
+                        '#38bdf8', // Blue (Accent)
+                        '#a0aec0'  // Gray
+                    ],
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: var(--text-gray),
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
