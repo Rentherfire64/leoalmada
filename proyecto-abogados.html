@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudio Juridico & Asociados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --gold: #c5a059; --dark: #1a252f; --white: #ffffff; }
+        body { font-family: 'Playfair Display', serif; margin: 0; background: var(--white); color: var(--dark); }
+        
+        .top-bar { background: var(--dark); color: white; padding: 10px 5%; font-size: 0.8rem; text-align: right; }
+        
+        header { 
+            height: 90vh;
+            background: linear-gradient(to right, rgba(26,37,47,0.9), rgba(26,37,47,0.5)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; display: flex; align-items: center; padding: 0 10%; color: white;
+        }
+        
+        .hero-text { max-width: 600px; }
+        .hero-text h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
+        .gold-line { width: 80px; height: 4px; background: var(--gold); margin-bottom: 20px; }
+        
+        .btn-consult { 
+            background: var(--gold); color: white; padding: 18px 35px; 
+            text-decoration: none; font-weight: bold; display: inline-block; transition: 0.3s;
+        }
+        .btn-consult:hover { background: #b08d48; }
+
+        .features { display: flex; justify-content: space-around; padding: 80px 10%; background: #f9f9f9; text-align: center; }
+        .feat-card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">Consulta Gratuita: +54 11 1234-5678 | Buenos Aires, Arg</div>
+    <header>
+        <div class="hero-text">
+            <div class="gold-line"></div>
+            <h1>Defendemos sus derechos con excelencia jurídica.</h1>
+            <p>Especialistas en Derecho Civil, Comercial y Laboral con más de 20 años de trayectoria.</p><br>
+            <a href="#" class="btn-consult">AGENDAR CONSULTA</a>
+        </div>
+    </header>
+    <section class="features">
+        <div class="feat-card">
+            <i class="fas fa-balance-scale"></i>
+            <h3>Justicia</h3>
+            <p>Transparencia en cada proceso.</p>
+        </div>
+        <div class="feat-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Confianza</h3>
+            <p>Privacidad absoluta garantizada.</p>
+        </div>
+        <div class="feat-card">
+            <i class="fas fa-file-contract"></i>
+            <h3>Resultados</h3>
+            <p>Eficacia en resolución de casos.</p>
+        </div>
+    </section>
+</body>
+</html>
