@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Style | E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #000; --accent: #ff4757; --gray: #f4f4f4; }
+        body { font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* Nav */
+        nav { display: flex; justify-content: space-between; padding: 20px 5%; align-items: center; background: white; }
+        .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: -1px; }
+
+        /* Hero */
+        .hero { 
+            height: 80vh; 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; text-transform: uppercase; }
+        .btn-shop { background: white; color: black; padding: 15px 40px; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; }
+        .btn-shop:hover { background: var(--accent); color: white; }
+
+        /* Products */
+        .products { padding: 50px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .item { text-align: center; position: relative; }
+        .item img { width: 100%; border-radius: 10px; transition: 0.3s; }
+        .item:hover img { transform: scale(1.03); }
+        .price { color: var(--accent); font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">URBAN STYLE</div>
+        <div><i class="fas fa-search"></i> &nbsp; <i class="fas fa-shopping-bag"></i></div>
+    </nav>
+    <header class="hero">
+        <h1>Nueva Colección 2025</h1>
+        <p>Define tu estilo con piezas únicas.</p><br>
+        <a href="#" class="btn-shop">COMPRAR AHORA</a>
+    </header>
+    <section class="products">
+        <div class="item">
+            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" alt="Remera">
+            <h4>T-Shirt Minimalist</h4>
+            <p class="price">$25.00</p>
+        </div>
+        <div class="item">
+            <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=500&q=80" alt="Chaqueta">
+            <h4>Urban Jacket</h4>
+            <p class="price">$85.00</p>
+        </div>
+        <div class="item">
+            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Jeans">
+            <h4>Blue Denim</h4>
+            <p class="price">$45.00</p>
+        </div>
+    </section>
+</body>
+</html>
