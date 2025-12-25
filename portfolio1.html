@@ -3,18 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> RentCompInformatica | Desarrollador Web Freelance</title>
-    <link rel="stylesheet" href="style1.css">
-    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    <title>RentCompInformatica | Desarrollador Web Freelance</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* VARIABLES DE COLOR */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #38bdf8;
+            --text-light: #f8fafc;
+            --text-gray: #94a3b8;
+            --gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+
+        /* RESET & GENERAL */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* NAVEGACIÓN */
+        nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 10%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-light); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 10%;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+        }
+
+        .highlight { color: var(--accent); }
+
+        h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
+
+        /* BOTONES */
+        .btn-primary, .btn-secondary {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary { background: var(--accent); color: var(--bg-dark); border: none; cursor: pointer; }
+        .btn-primary:hover { background: #7dd3fc; transform: translateY(-2px); }
+
+        .btn-secondary { border: 1px solid var(--accent); color: var(--accent); }
+        .btn-secondary:hover { background: rgba(56, 189, 248, 0.1); }
+
+        /* SERVICIOS */
+        .services { padding: 100px 10%; text-align: center; }
+        .services h2 { font-size: 2.5rem; margin-bottom: 3rem; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .service-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        /* PORTAFOLIO (Tus nuevas cards integradas) */
+        .portfolio { padding: 100px 10%; background: #0b1121; text-align: center; }
+        .portfolio h2 { font-size: 2.5rem; margin-bottom: 3rem; }
+
+        .portfolio-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .project-item {
+            background: var(--bg-card);
+            border-radius: 16px;
+            width: 400px;
+            overflow: hidden;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .project-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: var(--accent);
+        }
+
+        .project-image-placeholder {
+            background: var(--gradient);
+            height: 160px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            color: var(--accent);
+        }
+
+        .project-image-placeholder i { font-size: 2.5rem; margin-right: 15px; }
+
+        .project-info { padding: 30px; }
+        .project-info h4 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-light); }
+        .project-info p { color: var(--text-gray); margin-bottom: 20px; }
+
+        /* FORMULARIO CONTACTO */
+        footer { padding: 100px 10%; text-align: center; }
+        #contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        #contact-form input, #contact-form textarea {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+
+        #contact-form input:focus, #contact-form textarea:focus { border-color: var(--accent); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Simplificado para el ejemplo */
+            .project-item { width: 100%; }
+        }
+    </style>
 </head>
 <body>
+
     <nav>
-        <div class="logo">MiPortfolio</div>
+        <div class="logo">RentComp</div>
         <ul class="nav-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#portafolio">Portafolio</a></li>
-            <li><a href="#contacto" class="btn-primary">Contacto</a></li>
+            <li><a href="#contacto" class="btn-primary" style="padding: 0.5rem 1.2rem;">Contacto</a></li>
         </ul>
     </nav>
 
@@ -30,14 +207,17 @@
         <h2>Lo que ofrezco</h2>
         <div class="services-grid">
             <div class="service-card">
+                <i class="fas fa-pencil-ruler" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
                 <h3>Diseño UX/UI</h3>
                 <p>Páginas intuitivas que guían al cliente hacia la compra.</p>
             </div>
             <div class="service-card">
+                <i class="fas fa-code" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
                 <h3>Desarrollo Web</h3>
                 <p>Sitios rápidos y seguros usando las últimas tecnologías.</p>
             </div>
             <div class="service-card">
+                <i class="fas fa-search-dollar" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
                 <h3>SEO & Optimización</h3>
                 <p>Aparece en los primeros resultados de búsqueda de Google.</p>
             </div>
@@ -47,20 +227,31 @@
     <section id="portafolio" class="portfolio">
         <h2>Proyectos Destacados</h2>
         <div class="portfolio-grid">
+            
             <div class="project-item">
-                <img src="https://via.placeholder.com/400x250" alt="Proyecto 1">
+                <div class="project-image-placeholder">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>PROYECTO 1</span>
+                </div>
                 <div class="project-info">
                     <h4>E-commerce de Ropa</h4>
-                    <p>Tienda online con pagos integrados.</p>
+                    <p>Tienda online completa con carrito de compras y pagos integrados.</p>
+                    <a href="#" class="btn-secondary" style="font-size: 0.8rem;">Ver Detalle</a>
                 </div>
             </div>
+
             <div class="project-item">
-                <img src="https://via.placeholder.com/400x250" alt="Proyecto 2">
+                <div class="project-image-placeholder">
+                    <i class="fas fa-gavel"></i>
+                    <span>PROYECTO 2</span>
+                </div>
                 <div class="project-info">
                     <h4>Página para Abogados</h4>
-                    <p>Landing page corporativa de alta conversión.</p>
+                    <p>Landing page profesional diseñada para captar nuevos clientes potenciales.</p>
+                    <a href="#" class="btn-secondary" style="font-size: 0.8rem;">Ver Detalle</a>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -75,6 +266,12 @@
         </form>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Script simple para enviar el formulario (puedes expandirlo luego)
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias! Mensaje recibido. (Esto es una simulación)');
+        });
+    </script>
 </body>
 </html>
