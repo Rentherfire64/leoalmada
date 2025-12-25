@@ -106,13 +106,13 @@
 
         .service-card:hover { border-color: var(--accent); transform: translateY(-5px); }
 
-        /* PORTAFOLIO (Tus nuevas cards integradas) */
+        /* PORTAFOLIO */
         .portfolio { padding: 100px 10%; background: #0b1121; text-align: center; }
         .portfolio h2 { font-size: 2.5rem; margin-bottom: 3rem; }
 
         .portfolio-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             justify-content: center;
         }
@@ -120,16 +120,16 @@
         .project-item {
             background: var(--bg-card);
             border-radius: 16px;
-            width: 400px;
             overflow: hidden;
             text-align: left;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -141,18 +141,18 @@
 
         .project-image-placeholder {
             background: var(--gradient);
-            height: 160px;
+            height: 140px;
             display: flex;
             align-items: center;
-            padding: 0 30px;
+            padding: 0 25px;
             color: var(--accent);
         }
 
-        .project-image-placeholder i { font-size: 2.5rem; margin-right: 15px; }
+        .project-image-placeholder i { font-size: 2.2rem; margin-right: 15px; }
 
-        .project-info { padding: 30px; }
-        .project-info h4 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-light); }
-        .project-info p { color: var(--text-gray); margin-bottom: 20px; }
+        .project-info { padding: 25px; }
+        .project-info h4 { font-size: 1.3rem; margin-bottom: 8px; color: var(--text-light); }
+        .project-info p { color: var(--text-gray); margin-bottom: 20px; font-size: 0.95rem; min-height: 3rem; }
 
         /* FORMULARIO CONTACTO */
         footer { padding: 100px 10%; text-align: center; }
@@ -178,8 +178,8 @@
         /* RESPONSIVE */
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Simplificado para el ejemplo */
-            .project-item { width: 100%; }
+            .nav-links { display: none; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -231,11 +231,11 @@
             <div class="project-item">
                 <div class="project-image-placeholder">
                     <i class="fas fa-shopping-bag"></i>
-                    <span>PROYECTO 1</span>
+                    <span>E-COMMERCE</span>
                 </div>
                 <div class="project-info">
-                    <h4>E-commerce de Ropa</h4>
-                    <p>Tienda online completa con carrito de compras y pagos integrados.</p>
+                    <h4>Tienda de Moda</h4>
+                    <p>E-commerce con gestión de stock y pagos integrados para marcas de ropa.</p>
                     <a href="proyecto-ropa.html" class="btn-secondary">Ver Proyecto</a>
                 </div>
             </div>
@@ -243,12 +243,48 @@
             <div class="project-item">
                 <div class="project-image-placeholder">
                     <i class="fas fa-gavel"></i>
-                    <span>PROYECTO 2</span>
+                    <span>LEGAL</span>
                 </div>
                 <div class="project-info">
-                    <h4>Página para Abogados</h4>
-                    <p>Landing page profesional diseñada para captar nuevos clientes potenciales.</p>
+                    <h4>Estudio Jurídico</h4>
+                    <p>Landing page corporativa con enfoque en captación de leads y confianza.</p>
                     <a href="proyecto-abogados.html" class="btn-secondary">Ver Proyecto</a>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-image-placeholder">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>RESERVAS</span>
+                </div>
+                <div class="project-info">
+                    <h4>Sistema de Turnos</h4>
+                    <p>Plataforma para centros de estética con reserva de citas online en tiempo real.</p>
+                    <a href="proyecto-turnos.html" class="btn-secondary">Ver Proyecto</a>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-image-placeholder">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>FINTECH</span>
+                </div>
+                <div class="project-info">
+                    <h4>Dashboard Financiero</h4>
+                    <p>Panel de control interactivo para visualización de gastos y ahorros mensuales.</p>
+                    <a href="proyecto-finanzas.html" class="btn-secondary">Ver Proyecto</a>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-image-placeholder">
+                    <i class="fas fa-home"></i>
+                    <span>REAL ESTATE</span>
+                </div>
+                <div class="project-info">
+                    <h4>Portal Inmobiliario</h4>
+                    <p>Buscador de propiedades con filtros avanzados por precio y ubicación.</p>
+                    <a href="proyecto-inmobiliaria.html" class="btn-secondary">Ver Proyecto</a>
                 </div>
             </div>
 
@@ -267,7 +303,6 @@
     </footer>
 
     <script>
-        // Script simple para enviar el formulario (puedes expandirlo luego)
         document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('¡Gracias! Mensaje recibido. (Esto es una simulación)');
