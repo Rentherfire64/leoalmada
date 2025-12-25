@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belleza Spa | Sistema de Turnos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #f8fcfb;
+            --accent-green: #38bdf8; /* Manteniendo el azul de tu portfolio principal */
+            --dark-text: #2c3e50;
+            --light-gray: #ecf0f1;
+            --medium-gray: #bdc3c7;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background-color: var(--primary-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-to-portfolio {
+            display: inline-block;
+            margin: 20px 0;
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .back-to-portfolio:hover { color: #22a7f0; }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1544161510-0ccd77854b81?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+        }
+        .btn-book {
+            background: var(--accent-green);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-book:hover { background-color: #22a7f0; }
+
+        /* Turnos Section */
+        .turnos-section {
+            padding: 40px 0;
+            text-align: center;
+        }
+        .turnos-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--dark-text);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .day-name {
+            font-weight: bold;
+            color: var(--accent-green);
+            padding: 10px 0;
+        }
+        .day-number {
+            padding: 15px 0;
+            border-radius: 5px;
+            background-color: var(--light-gray);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .day-number.available:hover {
+            background-color: var(--accent-green);
+            color: white;
+        }
+        .day-number.selected {
+            background-color: var(--accent-green);
+            color: white;
+            font-weight: bold;
+        }
+        .day-number.unavailable {
+            background-color: var(--medium-gray);
+            color: #95a5a6;
+            cursor: not-allowed;
+        }
+        .time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .time-slot {
+            background-color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .time-slot:hover {
+            background-color: var(--accent-green);
+            color: white;
+        }
+        .time-slot.selected-time {
+            background-color: var(--accent-green);
+            color: white;
+            font-weight: bold;
+        }
+        .confirmation {
+            margin-top: 50px;
+            background-color: #e8f9f6; /* Un verde suave para confirmación */
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #c9ede2;
+        }
+        .confirmation p {
+            font-size: 1.1rem;
+            color: #27ae60;
+            font-weight: 500;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .calendar-grid { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html#portafolio" class="back-to-portfolio"><i class="fas fa-arrow-left"></i> Volver al Portfolio</a>
+    </div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Agenda tu Momento de Relax</h1>
+            <p>Reserva fácil y rápido tus tratamientos de belleza. Elige la fecha y hora que mejor te convenga.</p>
+            <a href="#turnos" class="btn-book">AGENDAR TURNO</a>
+        </div>
+    </header>
+
+    <section id="turnos" class="turnos-section">
+        <div class="container">
+            <h2>Selecciona tu Fecha y Hora</h2>
+
+            <div class="calendar-grid">
+                <div class="day-name">Lun</div>
+                <div class="day-name">Mar</div>
+                <div class="day-name">Mié</div>
+                <div class="day-name">Jue</div>
+                <div class="day-name">Vie</div>
+                <div class="day-name">Sáb</div>
+                <div class="day-name">Dom</div>
+                <div class="day-number unavailable">28</div>
+                <div class="day-number unavailable">29</div>
+                <div class="day-number unavailable">30</div>
+                <div class="day-number available">1</div>
+                <div class="day-number available">2</div>
+                <div class="day-number available">3</div>
+                <div class="day-number unavailable">4</div>
+                <div class="day-number available selected">5</div> <div class="day-number available">6</div>
+                <div class="day-number available">7</div>
+                <div class="day-number available">8</div>
+                <div class="day-number available">9</div>
+                <div class="day-number available">10</div>
+                <div class="day-number unavailable">11</div>
+            </div>
+
+            <h3>Horarios Disponibles para el 5 de Marzo</h3>
+            <div class="time-slots">
+                <div class="time-slot">09:00 AM</div>
+                <div class="time-slot">10:30 AM</div>
+                <div class="time-slot selected-time">12:00 PM</div>
+                <div class="time-slot">03:00 PM</div>
+                <div class="time-slot">04:30 PM</div>
+                <div class="time-slot">06:00 PM</div>
+            </div>
+            
+            <a href="#" class="btn-book" style="margin-top: 40px;">CONFIRMAR TURNO</a>
+
+            <div class="confirmation" style="display: none;">
+                <p><i class="fas fa-check-circle"></i> ¡Turno confirmado para el 5 de Marzo a las 12:00 PM!</p>
+                <p>Recibirás un recordatorio en tu correo.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simulación de interacción (sin backend)
+        const dayNumbers = document.querySelectorAll('.day-number.available');
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const confirmBtn = document.querySelector('.turnos-section .btn-book');
+        const confirmationMsg = document.querySelector('.confirmation');
+
+        dayNumbers.forEach(day => {
+            day.addEventListener('click', () => {
+                dayNumbers.forEach(d => d.classList.remove('selected'));
+                day.classList.add('selected');
+                confirmationMsg.style.display = 'none'; // Ocultar confirmación al cambiar fecha
+            });
+        });
+
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                timeSlots.forEach(s => s.classList.remove('selected-time'));
+                slot.classList.add('selected-time');
+                confirmationMsg.style.display = 'none'; // Ocultar confirmación al cambiar hora
+            });
+        });
+
+        confirmBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const selectedDay = document.querySelector('.day-number.selected');
+            const selectedTime = document.querySelector('.time-slot.selected-time');
+
+            if (selectedDay && selectedTime) {
+                confirmationMsg.innerHTML = `<p><i class="fas fa-check-circle"></i> ¡Turno confirmado para el día ${selectedDay.textContent} a las ${selectedTime.textContent}!</p><p>Recibirás un recordatorio en tu correo.</p>`;
+                confirmationMsg.style.display = 'block';
+                confirmBtn.style.display = 'none'; // Ocultar botón de confirmar
+            } else {
+                alert('Por favor, selecciona una fecha y una hora.');
+            }
+        });
+    </script>
+</body>
+</html>
