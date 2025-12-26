@@ -28,7 +28,9 @@
             color: var(--primary-dark);
             text-decoration: none;
             font-weight: bold;
+            transition: 0.3s;
         }
+        .back-link:hover { color: var(--accent-gold); }
 
         /* Hero */
         .hero {
@@ -76,7 +78,7 @@
 
         .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
         .card:hover { transform: translateY(-10px); }
-        .card img { width: 100%; height: 230px; object-fit: cover; }
+        .card img { width: 100%; height: 230px; object-fit: cover; border-bottom: 1px solid #eee; }
 
         .card-body { padding: 20px; }
         .price { color: var(--accent-gold); font-size: 1.5rem; font-weight: bold; }
@@ -84,7 +86,7 @@
         .location { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
 
         .features { display: flex; gap: 15px; border-top: 1px solid #eee; padding-top: 15px; color: var(--text-muted); font-size: 0.9rem; }
-        .features i { color: var(--accent-gold); }
+        .features i { color: var(--accent-gold); margin-right: 5px; }
 
         @media (max-width: 768px) { .hero h1 { font-size: 2rem; } }
     </style>
@@ -126,8 +128,9 @@
 
     <main class="container">
         <div class="properties-grid">
+            
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Casa">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Mansión Moderna">
                 <div class="card-body">
                     <div class="price">u$s 450.000</div>
                     <h3>Mansión Moderna con Piscina</h3>
@@ -141,7 +144,7 @@
             </div>
 
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1600607687940-4e2a09695d51?auto=format&fit=crop&w=600&q=80" alt="Departamento">
+                <img src="https://images.unsplash.com/photo-1600607687940-4e2a09695d51?auto=format&fit=crop&w=600&q=80" alt="Loft Industrial">
                 <div class="card-body">
                     <div class="price">u$s 280.000</div>
                     <h3>Loft Industrial en el Centro</h3>
@@ -153,6 +156,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
 
