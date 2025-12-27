@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mosquetermos | Fan Page Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    
     <style>
         :root {
             --primary-color: #00ff88; 
             --bg-dark: #0a0a0a;
             --card-bg: #111111;
             --text-light: #f0f0f0;
-            --fire-color: #ff4500; /* Color naranja fuego */
+            --fire-color: #ff4500;
         }
 
         body {
@@ -36,50 +38,17 @@
             letter-spacing: 2px;
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            margin-top: 10px;
-        }
-
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 40px 20px;
         }
 
-        /* Sección de Video */
-        .featured-video {
-            background: #161616;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 60px;
-            border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        /* Cuadrícula de Integrantes */
-        h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--primary-color);
-            display: inline-block;
-            width: 100%;
-            padding-bottom: 10px;
+        /* Estilo para las banderas de la librería */
+        .flag-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            border-radius: 4px;
         }
 
         .integrantes-grid {
@@ -101,20 +70,20 @@
             text-align: center;
             border: 1px solid #222;
             transition: all 0.4s ease;
-            min-height: 200px;
+            min-height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
-        /* Hover Normal */
         .member-card:hover {
             transform: translateY(-10px);
             border-color: var(--primary-color);
             box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
         }
 
-        /* EFECTO FUEGO PARA FUNDADORES */
+        /* Efecto Fuego */
         .founder-card:hover {
             border-color: var(--fire-color) !important;
             box-shadow: 0 0 25px rgba(255, 69, 0, 0.6) !important;
@@ -123,23 +92,13 @@
 
         .founder-card:hover .member-name {
             color: var(--fire-color) !important;
-            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
         }
 
         @keyframes shake {
             0% { transform: translateY(-10px) rotate(0deg); }
             25% { transform: translateY(-11px) rotate(0.5deg); }
             50% { transform: translateY(-10px) rotate(-0.5deg); }
-            75% { transform: translateY(-9px) rotate(0.5deg); }
             100% { transform: translateY(-10px) rotate(0deg); }
-        }
-
-        .member-country {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 15px;
-            display: block;
         }
 
         .member-name {
@@ -147,27 +106,16 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 8px;
-            display: block;
             transition: 0.3s;
         }
 
         .member-role {
             font-size: 0.85rem;
             color: #999;
-            line-height: 1.4;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: #050505;
-            color: #555;
-            font-size: 0.9rem;
-            margin-top: 60px;
+            max-width: 180px;
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
             .integrantes-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
@@ -176,120 +124,93 @@
 
     <header>
         <h1>MOSQUETERMOS 🧉</h1>
-        <p class="subtitle">La unión del streaming sudamericano</p>
     </header>
 
     <div class="container">
-        
-        <section class="featured-video">
-            <h2>Stream Destacado</h2>
-            <div class="video-wrapper">
-                <iframe 
-                    src="https://www.youtube.com/embed/FgLwoHkEIV0" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <div class="video-info">
-                <h3>Debate Mosquetermos con Fabriuruguayo</h3>
-                <p>Análisis de fichajes, actualidad del fútbol y el debate más picante de la región.</p>
-            </div>
-        </section>
+        <section class="integrantes-grid">
+            
+            <a href="#" class="member-link">
+                <div class="member-card founder-card">
+                    <span class="flag-icon flag-icon-uy"></span>
+                    <span class="member-name">Fabri</span>
+                    <span class="member-role">Fundador/21cm 🔥</span>
+                </div>
+            </a>
 
-        <section>
-            <h2>Integrantes</h2>
-            <div class="integrantes-grid">
-                
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card founder-card">
-                        <span class="member-country">UY</span>
-                        <span class="member-name">Fabri</span>
-                        <span class="member-role">Fundador/21cm 🔥</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card">
+                    <span class="flag-icon flag-icon-py"></span>
+                    <span class="member-name">Cesar</span>
+                    <span class="member-role">Panelista / Paraguay</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
-                        <span class="member-country">PY</span>
-                        <span class="member-name">Cesar</span>
-                        <span class="member-role">Panelista / Paraguay</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card">
+                    <span class="flag-icon flag-icon-br"></span>
+                    <span class="member-name">Duda</span>
+                    <span class="member-role">2do mejor brasilero de habla hispana</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
-                        <span class="member-country">BR</span>
-                        <span class="member-name">Duda</span>
-                        <span class="member-role">2do mejor brasilero de habla hispana</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card founder-card">
+                    <span class="flag-icon flag-icon-cl"></span>
+                    <span class="member-name">Quintana</span>
+                    <span class="member-role">Fundador/experto en enanos 🔥</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card founder-card">
-                        <span class="member-country">CL</span>
-                        <span class="member-name">Quintana</span>
-                        <span class="member-role">Fundador/experto en enanos 🔥</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card founder-card">
+                    <span class="flag-icon flag-icon-co"></span>
+                    <span class="member-name">Juan</span>
+                    <span class="member-role">Fundador/experto en Papayas 🔥</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card founder-card">
-                        <span class="member-country">CO</span>
-                        <span class="member-name">Juan</span>
-                        <span class="member-role">Fundador/experto en Papayas 🔥</span>
-                    </div>
-                </a>
-                
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
-                        <span class="member-country">EC</span>
-                        <span class="member-name">Sebigol</span>
-                        <span class="member-role">Experto en la Bundesliga</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card">
+                    <span class="flag-icon flag-icon-ec"></span>
+                    <span class="member-name">Sebigol</span>
+                    <span class="member-role">Experto en la Bundesliga</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
-                        <span class="member-country">PE</span>
-                        <span class="member-name">Gianma</span>
-                        <span class="member-role">DJ</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card">
+                    <span class="flag-icon flag-icon-pe"></span>
+                    <span class="member-name">Gianma</span>
+                    <span class="member-role">DJ</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
-                        <span class="member-country">BO</span>
-                        <span class="member-name">Venas</span>
-                        <span class="member-role">Venoso</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card">
+                    <span class="flag-icon flag-icon-bo"></span>
+                    <span class="member-name">Venas</span>
+                    <span class="member-role">Venoso</span>
+                </div>
+            </a>
 
-                <a href="https://www.instagram.com/bochadeportes" target="_blank" class="member-link">
-                    <div class="member-card founder-card">
-                        <span class="member-country">EC</span>
-                        <span class="member-name">bocha</span>
-                        <span class="member-role">Fundador/Humodeportes 🔥</span>
-                    </div>
-                </a>
+            <a href="https://www.instagram.com/bochadeportes" class="member-link">
+                <div class="member-card founder-card">
+                    <span class="flag-icon flag-icon-ec"></span>
+                    <span class="member-name">bocha</span>
+                    <span class="member-role">Fundador/Humodeportes 🔥</span>
+                </div>
+            </a>
 
-                <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
-                        <span class="member-country">VE</span>
-                        <span class="member-name">Gary</span>
-                        <span class="member-role">chistes/rapi</span>
-                    </div>
-                </a>
+            <a href="#" class="member-link">
+                <div class="member-card">
+                    <span class="flag-icon flag-icon-ve"></span>
+                    <span class="member-name">Gary</span>
+                    <span class="member-role">chistes/rapi</span>
+                </div>
+            </a>
 
-            </div>
         </section>
     </div>
-
-    <footer>
-        <p>Fan Page creada para la comunidad de Mosquetermos</p>
-        <p>Los derechos de los videos pertenecen a sus respectivos creadores.</p>
-    </footer>
 
 </body>
 </html>
