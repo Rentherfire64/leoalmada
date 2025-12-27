@@ -8,8 +8,9 @@
         :root {
             --primary-color: #00ff88; 
             --bg-dark: #0a0a0a;
-            --card-bg: #111111; /* Color exacto de tu imagen */
+            --card-bg: #111111;
             --text-light: #f0f0f0;
+            --fire-color: #ff4500; /* Color naranja fuego */
         }
 
         body {
@@ -67,10 +68,7 @@
 
         .video-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
 
         /* Cuadrícula de Integrantes */
@@ -90,7 +88,6 @@
             gap: 20px;
         }
 
-        /* Estilo de Tarjeta tipo Imagen */
         .member-link {
             text-decoration: none;
             color: inherit;
@@ -103,17 +100,38 @@
             border-radius: 15px;
             text-align: center;
             border: 1px solid #222;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             min-height: 200px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
+        /* Hover Normal */
         .member-card:hover {
             transform: translateY(-10px);
             border-color: var(--primary-color);
             box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
+        }
+
+        /* EFECTO FUEGO PARA FUNDADORES */
+        .founder-card:hover {
+            border-color: var(--fire-color) !important;
+            box-shadow: 0 0 25px rgba(255, 69, 0, 0.6) !important;
+            animation: shake 0.5s infinite;
+        }
+
+        .founder-card:hover .member-name {
+            color: var(--fire-color) !important;
+            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+        }
+
+        @keyframes shake {
+            0% { transform: translateY(-10px) rotate(0deg); }
+            25% { transform: translateY(-11px) rotate(0.5deg); }
+            50% { transform: translateY(-10px) rotate(-0.5deg); }
+            75% { transform: translateY(-9px) rotate(0.5deg); }
+            100% { transform: translateY(-10px) rotate(0deg); }
         }
 
         .member-country {
@@ -130,6 +148,7 @@
             color: var(--primary-color);
             margin-bottom: 8px;
             display: block;
+            transition: 0.3s;
         }
 
         .member-role {
@@ -184,10 +203,10 @@
             <div class="integrantes-grid">
                 
                 <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
+                    <div class="member-card founder-card">
                         <span class="member-country">UY</span>
                         <span class="member-name">Fabri</span>
-                        <span class="member-role">Fundador/21cm</span>
+                        <span class="member-role">Fundador/21cm 🔥</span>
                     </div>
                 </a>
 
@@ -203,18 +222,26 @@
                     <div class="member-card">
                         <span class="member-country">BR</span>
                         <span class="member-name">Duda</span>
-                        <span class="member-role">2do mejor brasilero de habla hispana/experto en enanos y travas</span>
+                        <span class="member-role">2do mejor brasilero de habla hispana</span>
                     </div>
                 </a>
 
                 <a href="#" target="_blank" class="member-link">
-                    <div class="member-card">
+                    <div class="member-card founder-card">
                         <span class="member-country">CL</span>
                         <span class="member-name">Quintana</span>
-                        <span class="member-role">Fundador/experto en enanos</span>
+                        <span class="member-role">Fundador/experto en enanos 🔥</span>
                     </div>
                 </a>
 
+                <a href="#" target="_blank" class="member-link">
+                    <div class="member-card founder-card">
+                        <span class="member-country">CO</span>
+                        <span class="member-name">Juan</span>
+                        <span class="member-role">Fundador/experto en Papayas 🔥</span>
+                    </div>
+                </a>
+                
                 <a href="#" target="_blank" class="member-link">
                     <div class="member-card">
                         <span class="member-country">EC</span>
@@ -240,10 +267,10 @@
                 </a>
 
                 <a href="https://www.instagram.com/bochadeportes" target="_blank" class="member-link">
-                    <div class="member-card">
+                    <div class="member-card founder-card">
                         <span class="member-country">EC</span>
                         <span class="member-name">bocha</span>
-                        <span class="member-role">Fundador/Humodeportes</span>
+                        <span class="member-role">Fundador/Humodeportes 🔥</span>
                     </div>
                 </a>
 
