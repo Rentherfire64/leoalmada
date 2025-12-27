@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosquetermos | Fan Page Oficial</title>
+    <style>
+        :root {
+            --primary-color: #00ff88; /* Verde Neón para destacar */
+            --bg-dark: #0a0a0a;
+            --card-bg: #161616;
+            --text-light: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            background: linear-gradient(180deg, #1a1a1a 0%, var(--bg-dark) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 2px solid #222;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Sección de Video */
+        .featured-video {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-info {
+            margin-top: 20px;
+        }
+
+        /* Cuadrícula de Integrantes */
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--primary-color);
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .integrantes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .member-flag {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #050505;
+            color: #555;
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .integrantes-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MOSQUETERMOS 🧉</h1>
+        <p class="subtitle">La unión del streaming sudamericano</p>
+    </header>
+
+    <div class="container">
+        
+        <section class="featured-video">
+            <h2>Stream Destacado</h2>
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/FgLwoHkEIV0" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-info">
+                <h3>Debate Mosquetermos con Fabriuruguayo</h3>
+                <p>Análisis de fichajes, actualidad del fútbol y el debate más picante de la región.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>El Elenco</h2>
+            <div class="integrantes-grid">
+                
+                <div class="member-card">
+                    <span class="member-flag">🇺🇾</span>
+                    <span class="member-name">Fabri</span>
+                    <span class="member-role">Host / Uruguay</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇦🇷</span>
+                    <span class="member-name">Integrante 2</span>
+                    <span class="member-role">Debatiente / Argentina</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇵🇾</span>
+                    <span class="member-name">Integrante 3</span>
+                    <span class="member-role">Panelista / Paraguay</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇧🇷</span>
+                    <span class="member-name">Integrante 4</span>
+                    <span class="member-role">Analista / Brasil</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇨🇱</span>
+                    <span class="member-name">Integrante 5</span>
+                    <span class="member-role">Invitado / Chile</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇪🇨</span>
+                    <span class="member-name">Seigol</span>
+                    <span class="member-role">Streaming / Ecuador</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇵🇪</span>
+                    <span class="member-name">Integrante 7</span>
+                    <span class="member-role">Panelista / Perú</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇧🇴</span>
+                    <span class="member-name">Integrante 8</span>
+                    <span class="member-role">Debate / Bolivia</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇦🇷</span>
+                    <span class="member-name">Integrante 9</span>
+                    <span class="member-role">Humor / Argentina</span>
+                </div>
+
+                <div class="member-card">
+                    <span class="member-flag">🇺🇾</span>
+                    <span class="member-name">Integrante 10</span>
+                    <span class="member-role">Datos / Uruguay</span>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Fan Page creada para la comunidad de Mosquetermos</p>
+        <p>Los derechos de los videos pertenecen a sus respectivos creadores.</p>
+    </footer>
+
+</body>
+</html>
