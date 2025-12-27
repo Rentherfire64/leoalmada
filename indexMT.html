@@ -111,13 +111,26 @@
         .member-name { color: var(--primary-color); font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
         .member-role { color: var(--text-dim); font-size: 0.8rem; }
 
+        /* FOOTER ESTILO WEB */
         footer {
+            background-color: #050505;
             text-align: center;
-            padding: 40px;
-            color: #444;
-            font-size: 0.8rem;
+            padding: 30px 20px;
+            border-top: 1px solid #222;
+            margin-top: 50px;
         }
 
+        footer p {
+            color: #555;
+            font-size: 0.75rem;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            header { flex-direction: column; text-align: center; gap: 5px; }
+            .integrantes-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
         @media (max-width: 600px) {
             .integrantes-grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 1.8rem; }
@@ -238,4 +251,5 @@
         
 </body>
 </html>
+
 
