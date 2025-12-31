@@ -52,7 +52,6 @@
 
         .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); z-index: 2100; }
 
-        /* Botón Hamburguesa */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -118,10 +117,8 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* RESPONSIVE - AJUSTES PARA CELULAR */
         @media (max-width: 768px) {
             .menu-toggle { display: flex; }
-            
             .nav-links {
                 position: fixed;
                 top: 0;
@@ -133,9 +130,7 @@
                 justify-content: center;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.5);
             }
-
             .nav-links.active { right: 0; }
-
             .btn-secondary { margin-left: 0; margin-top: 10px; }
             .hero { padding-top: 100px; }
         }
@@ -230,17 +225,18 @@
 
     <footer id="contacto">
         <h2 class="reveal">¿Hacemos algo increíble?</h2>
-        <form id="contact-form" class="reveal">
-            <input type="text" placeholder="Tu Nombre" required>
-            <input type="email" placeholder="Tu Email" required>
-            <textarea placeholder="Tu mensaje..." rows="4" required></textarea>
+        
+        <form id="contact-form" class="reveal" action="https://formspree.io/f/mqeakpby" method="POST">
+            <input type="text" name="name" placeholder="Tu Nombre" required>
+            <input type="email" name="email" placeholder="Tu Email" required>
+            <textarea name="message" placeholder="Tu mensaje..." rows="4" required></textarea>
             <button type="submit" class="btn-primary" style="color: #0f172a;">Enviar Mensaje</button>
         </form>
+        
         <p style="margin-top: 40px; color: var(--text-gray); font-size: 0.8rem;">&copy; 2025 Leo Almada. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // Lógica Menú Móvil
         const menuToggle = document.getElementById('mobile-menu');
         const navLinks = document.querySelector('.nav-links');
 
@@ -248,14 +244,12 @@
             navLinks.classList.toggle('active');
         });
 
-        // Cerrar menú al hacer click en un link (para móviles)
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
 
-        // Animación de aparición
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
