@@ -71,16 +71,25 @@
             text-align: center;
             padding: 0 10%;
         }
-        h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; }
         .highlight { color: var(--accent); }
+        .hero p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; }
 
         /* BOTONES */
         .btn-primary { 
             background: var(--accent); color: var(--bg-dark); padding: 0.8rem 2rem; 
             border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;
+            transition: 0.3s;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4); }
+
+        .btn-secondary { 
+            border: 1px solid var(--accent); color: var(--accent); padding: 0.8rem 2rem; 
+            border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;
+            transition: 0.3s;
         }
 
-        /* PORTFOLIO - ESTILOS DE LAS TARJETAS */
+        /* PORTFOLIO GRID */
         .portfolio { padding: 100px 10%; background: rgba(15, 23, 42, 0.5); }
         .portfolio h2 { font-size: 2.5rem; margin-bottom: 3rem; text-align: center; }
         
@@ -99,10 +108,7 @@
             text-align: left;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
 
         .card-header {
             height: 150px;
@@ -127,11 +133,30 @@
             gap: 0.5rem;
         }
 
+        /* SECCIÓN CONTACTO ORIGINAL */
+        footer { padding: 80px 10%; background: #070b14; text-align: center; }
+        #contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        #contact-form input, #contact-form textarea {
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            transition: 0.3s;
+            outline: none;
+        }
+        #contact-form input:focus, #contact-form textarea:focus { border-color: var(--accent); }
+
         /* ANIMACIONES */
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
-        footer { padding: 80px 10%; background: #070b14; text-align: center; }
     </style>
 </head>
 <body>
@@ -141,36 +166,40 @@
         <ul class="nav-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contacto" class="btn-primary">Contacto</a></li>
+            <li><a href="#contacto" class="btn-primary" style="padding: 0.5rem 1.2rem;">Contacto</a></li>
         </ul>
     </nav>
 
     <header id="inicio" class="hero">
-        <div>
-            <h1 class="reveal">Mis <span class="highlight">5 Proyectos</span> Destacados</h1>
-            <p class="reveal">Explora las soluciones digitales que he desarrollado.</p>
+        <div class="hero-content">
+            <h1 class="reveal">Transformo tus ideas en <br><span class="highlight">Sitios Web.</span></h1>
+            <p class="reveal">Diseño moderno, optimizado para Google y adaptable a todos los dispositivos.</p>
+            <div class="reveal">
+                <a href="#portfolio" class="btn-primary">Ver mis proyectos</a>
+                <a href="#contacto" class="btn-secondary" style="margin-left: 10px;">Hablemos</a>
+            </div>
         </div>
     </header>
 
     <section id="portfolio" class="portfolio">
-        <h2>Proyectos en el Repositorio</h2>
+        <h2 class="reveal">Portfolio de Proyectos</h2>
         <div class="portfolio-grid">
 
             <div class="card reveal">
                 <div class="card-header"><i class="fas fa-balance-scale"></i></div>
                 <div class="card-body">
                     <h3>Estudio Jurídico</h3>
-                    <p>Sitio profesional para firmas legales y abogados.</p>
-                    <a href="proyecto-abogados.html" class="btn-view">Abrir Proyecto <i class="fas fa-external-link-alt"></i></a>
+                    <p>Sitio web corporativo enfocado en servicios legales y consultoría.</p>
+                    <a href="proyecto-abogados.html" class="btn-view">Visualizar Web <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="card reveal">
                 <div class="card-header"><i class="fas fa-chart-line"></i></div>
                 <div class="card-body">
-                    <h3>Control de Finanzas</h3>
-                    <p>Dashboard interactivo para gestión económica personal.</p>
-                    <a href="proyecto-finanzas.html" class="btn-view">Abrir Proyecto <i class="fas fa-external-link-alt"></i></a>
+                    <h3>Gestión de Finanzas</h3>
+                    <p>Aplicación para el seguimiento de ingresos y gastos personales.</p>
+                    <a href="proyecto-finanzas.html" class="btn-view">Visualizar Web <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -178,26 +207,26 @@
                 <div class="card-header"><i class="fas fa-home"></i></div>
                 <div class="card-body">
                     <h3>Portal Inmobiliario</h3>
-                    <p>Plataforma para búsqueda y gestión de propiedades.</p>
-                    <a href="proyecto-inmobiliaria.html" class="btn-view">Abrir Proyecto <i class="fas fa-external-link-alt"></i></a>
+                    <p>Catálogo de propiedades con filtros de búsqueda avanzada.</p>
+                    <a href="proyecto-inmobiliaria.html" class="btn-view">Visualizar Web <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="card reveal">
                 <div class="card-header"><i class="fas fa-shopping-bag"></i></div>
                 <div class="card-body">
-                    <h3>E-Commerce de Ropa</h3>
-                    <p>Tienda online moderna con carrito y catálogo.</p>
-                    <a href="proyecto-ropa.html" class="btn-view">Abrir Proyecto <i class="fas fa-external-link-alt"></i></a>
+                    <h3>E-Commerce de Moda</h3>
+                    <p>Tienda online con carrito de compras y catálogo de ropa.</p>
+                    <a href="proyecto-ropa.html" class="btn-view">Visualizar Web <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="card reveal">
-                <div class="card-header"><i class="fas fa-calendar-check"></i></div>
+                <div class="card-header"><i class="fas fa-calendar-alt"></i></div>
                 <div class="card-body">
                     <h3>Sistema de Turnos</h3>
-                    <p>Gestión de citas y reservas para negocios.</p>
-                    <a href="proyecto-turnos.html" class="btn-view">Abrir Proyecto <i class="fas fa-external-link-alt"></i></a>
+                    <p>Gestión de citas online para negocios y profesionales.</p>
+                    <a href="proyecto-turnos.html" class="btn-view">Visualizar Web <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -205,7 +234,15 @@
     </section>
 
     <footer id="contacto">
-        <p>&copy; 2025 RentCompInformatica</p>
+        <h2 class="reveal">¿Listo para dar el salto?</h2>
+        <p class="reveal">Escríbeme y hagamos realidad tu visión digital.</p>
+        <form id="contact-form" class="reveal">
+            <input type="text" placeholder="Tu Nombre" required>
+            <input type="email" placeholder="Tu Email" required>
+            <textarea placeholder="Háblame de tu proyecto..." rows="5" required></textarea>
+            <button type="submit" class="btn-primary" style="cursor: pointer; border: none;">Enviar Mensaje</button>
+        </form>
+        <p style="margin-top: 40px; color: var(--text-gray); font-size: 0.8rem;">&copy; 2025 RentCompInformatica. Todos los derechos reservados.</p>
     </footer>
 
     <script>
@@ -221,6 +258,12 @@
         }
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", reveal);
+
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('🚀 ¡Mensaje enviado con éxito!');
+            this.reset();
+        });
     </script>
 </body>
 </html>
