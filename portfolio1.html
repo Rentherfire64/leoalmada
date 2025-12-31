@@ -134,6 +134,14 @@
             .btn-secondary { margin-left: 0; margin-top: 10px; }
             .hero { padding-top: 100px; }
         }
+
+        #text-anim {
+    display: inline-block;
+    min-width: 200px;
+    transition: opacity 0.5s ease-in-out;
+}
+.fade-out { opacity: 0; }
+        
     </style>
 </head>
 <body>
@@ -157,16 +165,20 @@
         </ul>
     </nav>
 
-    <header id="inicio" class="hero">
-        <div class="hero-content">
-            <h1 class="reveal">Transformo tus ideas en <br><span class="highlight">Sitios Web.</span></h1>
-            <p class="reveal">Diseño moderno, optimizado para celulares y buscadores.</p>
-            <div class="reveal" style="margin-top: 20px;">
-                <a href="#portfolio" class="btn-primary" style="color: #0f172a;">Ver Portfolio</a>
-                <a href="#contacto" class="btn-secondary">Hablemos</a>
-            </div>
+<header id="inicio" class="hero">
+    <div class="hero-content">
+        <h1 class="reveal">
+            Transformo tus ideas en <br>
+            <span id="text-anim" class="highlight">Sitios Web.</span>
+        </h1>
+        <p class="reveal">Diseño moderno, optimizado para celulares y buscadores.</p>
+        <div class="reveal" style="margin-top: 20px;">
+            <a href="#portfolio" class="btn-primary" style="color: #0f172a;">Ver Portfolio</a>
+            <a href="#contacto" class="btn-secondary">Hablemos</a>
         </div>
-    </header>
+    </div>
+</header>
+    
 
     <section id="servicios" class="maintenance-section">
         <div class="maint-card reveal">
@@ -262,6 +274,23 @@
         }
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", reveal);
+
+        const palabras = ["Sitios Web.", "E-Commerce.", "Apps Móviles.", "Negocios Online."];
+let index = 0;
+const el = document.getElementById("text-anim");
+
+function cambiarTexto() {
+    el.classList.add("fade-out"); // Empieza a desaparecer
+    
+    setTimeout(() => {
+        index = (index + 1) % palabras.length;
+        el.textContent = palabras[index];
+        el.classList.remove("fade-out"); // Aparece con la nueva palabra
+    }, 500); // Tiempo que tarda en cambiar la palabra mientras es invisible
+}
+
+setInterval(cambiarTexto, 3000); // Cambia cada 3 segundos
+        
     </script>
 </body>
 </html>
