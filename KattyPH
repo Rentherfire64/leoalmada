@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katty Pastelería - Horneando Mejoras</title>
+    <style>
+        :root {
+            --fondo: #fdf2f0;
+            --dorado: #c5a059;
+            --guinda: #7a1d23;
+            --rosa: #e5a7b3;
+            --blanco: #ffffff;
+            --negro: #1a1a1a; /* Agregada */
+            --accent: #e5a7b3; /* Agregada */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--fondo);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: var(--guinda);
+            position: relative;
+        }
+
+        /* Fondo de puntos */
+        .bg-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: radial-gradient(var(--rosa) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.2;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animación del Logo */
+        .logo-container {
+            margin-bottom: 30px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .logo-container img {
+            width: 220px;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid var(--blanco);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        /* Barra de carga */
+        .progress-wrapper {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px 0;
+        }
+
+        .progress-container {
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--dorado);
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--rosa), var(--guinda));
+            transition: width 0.4s ease;
+        }
+
+        #status-text {
+            display: block;
+            margin-top: 10px;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--guinda);
+        }
+
+        /* Botón WhatsApp */
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: #25d366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            margin-top: 20px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.05);
+            background-color: #128c7e;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(122, 29, 35, 0.05); /* Un tono suave del guinda */
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dev-link {
+            display: inline-block;
+            color: var(--guinda);
+            text-decoration: none;
+            opacity: 0.6;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+
+        .dev-link span {
+            font-weight: 800;
+        }
+
+        .dev-link:hover {
+            opacity: 1;
+            color: var(--guinda);
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .logo-container img { width: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-dots"></div>
+
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://kattyph.com.ar/wp-content/uploads/2026/03/WhatsApp-Image-2026-02-05-at-6.41.31-PM.jpeg" alt="Katty Pastelería Logo">
+        </div>
+
+        <h1>¡Algo dulce se está horneando!</h1>
+        <p>Estamos decorando nuestra nueva web para ofrecerte la mejor experiencia. <br> <strong>Volvemos muy pronto.</strong></p>
+
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar" id="myBar"></div>
+            </div>
+            <small id="status-text">Mezclando ingredientes...</small>
+        </div>
+
+        
+    </div>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Katty Pastelería</p>
+            <a href="https://ladevhosting.com.ar/" class="dev-link" target="_blank">
+                Diseñado y alojado por <span>LADevHosting</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function move() {
+            let elem = document.getElementById("myBar");
+            let status = document.getElementById("status-text");
+            let width = 1;
+            
+            const statusMessages = [
+                "Precalentando el horno...",
+                "Batiendo la crema...",
+                "Decorando con rosas...",
+                "Casi listo para servir..."
+            ];
+
+            let id = setInterval(frame, 40);
+            
+            function frame() {
+                if (width >= 92) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + "%";
+                    
+                    if(width == 25) status.innerText = statusMessages[0];
+                    if(width == 50) status.innerText = statusMessages[1];
+                    if(width == 75) status.innerText = statusMessages[2];
+                    if(width == 90) status.innerText = statusMessages[3];
+                }
+            }
+        }
+
+        window.onload = move;
+    </script>
+</body>
+</html>
