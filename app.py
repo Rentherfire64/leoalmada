@@ -29,29 +29,76 @@ DB_PATH = os.path.join(BASE_DIR, 'database.db')
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 
 
-# Función para crear las tablas si no existen
-def init_db():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    
-    # Crear tabla de clientes (ajusta los campos según tu código)
+# --- INICIALIZACIÓN DE LA BASE DE DATOS (EJECUCIÓN INMEDIATA PARA PRODUCTION/RENDER) ---
+def inicializar_db():
+    conexion = sqlite3.connect(DB_PATH)
+    cursor = conexion.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS proveedores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            contacto TEXT
+        )
+    ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS productos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            categoria TEXT NOT NULL,
+            descripcion TEXT NOT NULL,
+            precio REAL NOT NULL,
+            precio_costo REAL DEFAULT 0.0,
+            porcentaje_ganancia REAL DEFAULT 0.0,
+            stock REAL DEFAULT 0.0,
+            unidad_medida TEXT NOT NULL,
+            codigo TEXT DEFAULT '',
+            id_proveedor INTEGER,
+            FOREIGN KEY(id_proveedor) REFERENCES proveedores(id)
+        )
+    ''')
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS clientes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
+            obra TEXT NOT NULL,
             telefono TEXT,
-            direccion TEXT
+            saldo_deuda REAL DEFAULT 0.0,
+            activo INTEGER DEFAULT 1
         )
     ''')
-    
-    # Si tienes más tablas (productos, ventas, etc.), agrégalas aquí abajo:
-    # cursor.execute('''CREATE TABLE IF NOT EXISTS productos (...)''')
-    
-    conn.commit()
-    conn.close()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS boletas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cliente TEXT NOT NULL,
+            fecha TEXT NOT NULL,
+            total REAL NOT NULL,
+            items TEXT NOT NULL,
+            tipo_pago TEXT DEFAULT 'Efectivo',
+            id_cliente INTEGER
+        )
+    ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS acopios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_cliente INTEGER NOT NULL,
+            id_producto INTEGER NOT NULL,
+            cantidad_acopiada REAL DEFAULT 0.0
+        )
+    ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS historial_acopios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_cliente INTEGER NOT NULL,
+            id_producto INTEGER NOT NULL,
+            tipo_movimiento TEXT NOT NULL,
+            cantidad REAL NOT NULL,
+            fecha TEXT NOT NULL
+        )
+    ''')
+    conexion.commit()
+    conexion.close()
 
-# ¡IMPORTANTE! Llama a la función al arrancar la app
-init_db()
+# Ejecutar la creación de tablas SIEMPRE al iniciar la app en Render
+inicializar_db()
 
 
 # --- FUNCIÓN LOGÍSTICA PARA DISEÑAR EL COMPROBANTE PDF ---
@@ -121,7 +168,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     ]
 
     t_header = Table([[columna_izquierda, columna_derecha]], colWidths=[260, 260])
-    # Línea horizontal debajo de la cabecera
     t_header.setStyle(TableStyle([
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('ALIGN', (1,0), (1,0), 'CENTER'),
@@ -197,17 +243,14 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     
     t_items = Table(tabla_items_data, colWidths=[65, 255, 100, 100], rowHeights=alturas_filas)
     
-    # Bordes cerrados
     estilos_tabla = [
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#222222")), 
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'), 
         ('GRID', (0,0), (-1,-2), 0.5, colors.HexColor("#cbd5e0")), 
         ('PADDING', (0,0), (-1,-1), 5), 
         ('SPAN', (0, -1), (1, -1)), 
-        
         ('BOX', (0, -1), (1, -1), 0.5, colors.HexColor("#cbd5e0")),
         ('LINEBELOW', (0, -1), (1, -1), 0.5, colors.HexColor("#cbd5e0")),
-        
         ('LINEABOVE', (2, -1), (3, -1), 1, colors.black)
     ]
     if descuento_porcentaje > 0:
@@ -219,7 +262,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     story.append(t_items)
     story.append(Spacer(1, 15))
     
-    # Dirección final
     story.append(Paragraph("Av. Pres. Perón 6699, Villa Udaondo, Ituzaingó", ParagraphStyle('Dir', parent=styles['Normal'], fontSize=10.5, fontName="Helvetica", alignment=1, textColor=colors.HexColor("#1a202c"))))
     
     doc.build(story)
@@ -405,7 +447,6 @@ def cargar_acopio():
     conexion = sqlite3.connect(DB_PATH)
     cursor = conexion.cursor()
     
-    # 1. Actualizamos o creamos el saldo de acopio
     cursor.execute("SELECT id FROM acopios WHERE id_cliente = ? AND id_producto = ?", (id_cliente, id_producto))
     fila = cursor.fetchone()
     if fila:
@@ -413,7 +454,6 @@ def cargar_acopio():
     else:
         cursor.execute("INSERT INTO acopios (id_cliente, id_producto, cantidad_acopiada) VALUES (?, ?, ?)", (id_cliente, id_producto, cantidad))
     
-    # 2. Guardamos el movimiento en el historial
     cursor.execute('''
         INSERT INTO historial_acopios (id_cliente, id_producto, tipo_movimiento, cantidad, fecha)
         VALUES (?, ?, 'CARGA', ?, ?)
@@ -438,11 +478,9 @@ def retirar_acopio():
     if fila:
         id_cliente, id_producto, stock_actual = fila[0], fila[1], fila[2]
         
-        # 1. Descontamos del acopio y del stock general
         cursor.execute("UPDATE acopios SET cantidad_acopiada = ? WHERE id = ?", (stock_actual - cantidad, id_acopio))
         cursor.execute("UPDATE productos SET stock = stock - ? WHERE id = ?", (cantidad, id_producto))
         
-        # 2. Guardamos el movimiento en el historial
         cursor.execute('''
             INSERT INTO historial_acopios (id_cliente, id_producto, tipo_movimiento, cantidad, fecha)
             VALUES (?, ?, 'RETIRO', ?, ?)
@@ -493,74 +531,5 @@ def descargar_pdf_archivo(nombre_archivo):
     return send_file(os.path.join(CARPETA_PDFS, nombre_archivo), as_attachment=True)
 
 
-# --- BASE DE DATOS ---
-def inicializar_db():
-    conexion = sqlite3.connect(DB_PATH)
-    cursor = conexion.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS proveedores (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            contacto TEXT
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS productos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            categoria TEXT NOT NULL,
-            descripcion TEXT NOT NULL,
-            precio REAL NOT NULL,
-            precio_costo REAL DEFAULT 0.0,
-            porcentaje_ganancia REAL DEFAULT 0.0,
-            stock REAL DEFAULT 0.0,
-            unidad_medida TEXT NOT NULL,
-            codigo TEXT DEFAULT '',
-            id_proveedor INTEGER,
-            FOREIGN KEY(id_proveedor) REFERENCES proveedores(id)
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS clientes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            obra TEXT NOT NULL,
-            telefono TEXT,
-            saldo_deuda REAL DEFAULT 0.0,
-            activo INTEGER DEFAULT 1
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS boletas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            cliente TEXT NOT NULL,
-            fecha TEXT NOT NULL,
-            total REAL NOT NULL,
-            items TEXT NOT NULL,
-            tipo_pago TEXT DEFAULT 'Efectivo',
-            id_cliente INTEGER
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS acopios (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_cliente INTEGER NOT NULL,
-            id_producto INTEGER NOT NULL,
-            cantidad_acopiada REAL DEFAULT 0.0
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS historial_acopios (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_cliente INTEGER NOT NULL,
-            id_producto INTEGER NOT NULL,
-            tipo_movimiento TEXT NOT NULL,
-            cantidad REAL NOT NULL,
-            fecha TEXT NOT NULL
-        )
-    ''')
-    conexion.commit()
-    conexion.close()
-
 if __name__ == '__main__':
-    inicializar_db()
     app.run(host='0.0.0.0', port=5000, debug=False)
