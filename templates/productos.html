@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Productos y Proveedores - Materiales Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Materiales Online</a>
+            <div class="navbar-nav me-auto">
+                <a class="nav-link" href="/">Nueva Boleta</a>
+                <a class="nav-link active" href="/productos">Administrar Productos (ABM)</a>
+                <a class="nav-link" href="/clientes">Cuentas Corrientes (Clientes)</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h2 class="mb-4">Catálogo, Proveedores y Márgenes de Ganancia Automáticos</h2>
+
+        <!-- REGISTRAR PROVEEDOR NUEVO -->
+        <div class="card mb-4 shadow-sm border-secondary">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-truck"></i> 1. Registrar Proveedor / Cantera / Distribuidor</h5>
+            </div>
+            <div class="card-body bg-light">
+                <form action="/guardar-proveedor" method="POST" class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Nombre del Proveedor</label>
+                        <input type="text" name="nombre" class="form-control" placeholder="Ej: Loma Negra, Cantera Quilmes, Distribuidora Sur" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Contacto / Teléfono (Opcional)</label>
+                        <input type="text" name="contacto" class="form-control" placeholder="Ej: Fletero Juan 11...">
+                    </div>
+                    <div class="col-md-2 d-grid align-items-end">
+                        <button type="submit" class="btn btn-secondary fw-bold">➕ Guardar Prov.</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- CARGAR PRODUCTO CON MARGEN -->
+        <div class="card mb-4 shadow-sm border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-boxes"></i> 2. Cargar / Editar Material y Asignar Ganancia %</h5>
+            </div>
+            <div class="card-body">
+                <form action="/guardar-producto" method="POST" class="row g-3">
+                    <input type="hidden" name="id" id="producto_id"> 
+                    
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">Código Corto</label>
+                        <input type="text" name="codigo" id="form_codigo" class="form-control" placeholder="Ej: 10">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Proveedor Asignado</label>
+                        <select name="id_proveedor" id="form_proveedor" class="form-select" required>
+                            <option value="" disabled selected>--- Elegir Proveedor ---</option>
+                            {% for prov in proveedores %}
+                                <option value="{{ prov[0] }}">{{ prov[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Categoría</label>
+                        <select name="categoria" id="form_categoria" class="form-select" required>
+                            <option value="" disabled selected>--- Seleccione ---</option>
+                            <option value="Bolsas">Bolsas</option>
+                            <option value="Ladrillos">Ladrillos</option>
+                            <option value="Áridos">Áridos</option>
+                            <option value="Hierros">Hierros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Descripción del Material</label>
+                        <input type="text" name="descripcion" id="form_descripcion" class="form-control" placeholder="Ej: Cemento x 50kg" required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-2 border rounded bg-light">
+                            <label class="form-label fw-bold text-danger">Costo Proveedor ($)</label>
+                            <input type="number" step="0.01" name="precio_costo" id="form_costo" class="form-control" oninput="calcularVentaAutomatica()" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-2 border rounded bg-light">
+                            <label class="form-label fw-bold text-primary">Margen de Ganancia (%)</label>
+                            <input type="number" step="0.5" name="porcentaje_ganancia" id="form_ganancia" class="form-control" placeholder="Ej: 35" oninput="calcularVentaAutomatica()" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-2 border rounded bg-success bg-opacity-10">
+                            <label class="form-label fw-bold text-success">Precio Venta Público ($)</label>
+                            <input type="text" id="form_precio_vista" class="form-control fw-bold fs-5 text-success" readonly value="$0.00">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-2 border rounded bg-warning bg-opacity-10">
+                            <label class="form-label fw-bold text-dark">Stock Disponible</label>
+                            <input type="number" step="0.5" name="stock" id="form_stock" class="form-control" required>
+                            <input type="hidden" name="unidad_medida" value="Unidad">
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 text-end">
+                        <button type="button" onclick="limpiarFormulario()" class="btn btn-secondary me-2">Limpiar</button>
+                        <button type="submit" class="btn btn-success fw-bold">💾 Guardar Material</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- LISTADO -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0">Catálogo Almacenado</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Código</th>
+                            <th>Proveedor</th>
+                            <th>Categoría</th>
+                            <th>Descripción</th>
+                            <th class="text-center">Stock</th>
+                            <th class="text-danger">Costo</th>
+                            <th class="text-primary">Margen</th>
+                            <th class="text-success">Venta Público</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prod in productos %}
+                        <tr>
+                            <td><span class="badge bg-dark fs-6">{{ prod[1] or 'S/N' }}</span></td>
+                            <td><span class="text-muted fw-bold">{{ prod[9] or 'Sin asignar' }}</span></td>
+                            <td><span class="badge bg-primary">{{ prod[2] }}</span></td>
+                            <td><strong>{{ prod[3] }}</strong></td>
+                            <td class="text-center fw-bold">{{ prod[6] }}</td>
+                            <td class="text-danger">${{ "{:,.2f}".format(prod[5]) }}</td>
+                            <td class="text-primary fw-bold">+{{ prod[8] }}%</td>
+                            <td class="text-success fw-bold fs-5">${{ "{:,.2f}".format(prod[4]) }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-warning fw-bold" 
+                                        onclick="editarProducto('{{ prod[0] }}', '{{ prod[1] }}', '{{ prod[2] }}', '{{ prod[3] }}', '{{ prod[5] }}', '{{ prod[8] }}', '{{ prod[6] }}', '{{ prod[4] }}', '{{ prod[9] }}')">
+                                    Editar
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcularVentaAutomatica() {
+            const costo = parseFloat(document.getElementById('form_costo').value) || 0;
+            const margen = parseFloat(document.getElementById('form_ganancia').value) || 0;
+            const final = costo + (costo * (margen / 100));
+            document.getElementById('form_precio_vista').value = `$${final.toFixed(2)}`;
+        }
+
+        function editarProducto(id, codigo, cat, desc, costo, ganancia, stock, precio_venta, id_prov) {
+            document.getElementById('producto_id').value = id;
+            document.getElementById('form_codigo').value = (codigo === "None" || !codigo) ? "" : codigo;
+            document.getElementById('form_categoria').value = cat;
+            document.getElementById('form_descripcion').value = desc;
+            document.getElementById('form_costo').value = costo;
+            document.getElementById('form_ganancia').value = ganancia;
+            document.getElementById('form_stock').value = stock;
+            
+            // Buscar y seleccionar el proveedor en el desplegable por coincidencia de texto
+            const selProv = document.getElementById('form_proveedor');
+            for (let i = 0; i < selProv.options.length; i++) {
+                if (selProv.options[i].text === id_prov) {
+                    selProv.selectedIndex = i;
+                    break;
+                }
+            }
+
+            document.getElementById('form_precio_vista').value = `$${parseFloat(precio_venta).toFixed(2)}`;
+            window.scrollTo({top: 0, behavior: 'smooth'}); 
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('producto_id').value = '';
+            document.getElementById('form_codigo').value = '';
+            document.getElementById('form_categoria').selectedIndex = 0; 
+            document.getElementById('form_proveedor').selectedIndex = 0; 
+            document.getElementById('form_descripcion').value = '';
+            document.getElementById('form_costo').value = '';
+            document.getElementById('form_ganancia').value = '';
+            document.getElementById('form_stock').value = '';
+            document.getElementById('form_precio_vista').value = '$0.00';
+        }
+    </script>
+</body>
+</html>
