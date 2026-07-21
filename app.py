@@ -29,6 +29,31 @@ DB_PATH = os.path.join(BASE_DIR, 'database.db')
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 
 
+# Función para crear las tablas si no existen
+def init_db():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    
+    # Crear tabla de clientes (ajusta los campos según tu código)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            telefono TEXT,
+            direccion TEXT
+        )
+    ''')
+    
+    # Si tienes más tablas (productos, ventas, etc.), agrégalas aquí abajo:
+    # cursor.execute('''CREATE TABLE IF NOT EXISTS productos (...)''')
+    
+    conn.commit()
+    conn.close()
+
+# ¡IMPORTANTE! Llama a la función al arrancar la app
+init_db()
+
+
 # --- FUNCIÓN LOGÍSTICA PARA DISEÑAR EL COMPROBANTE PDF ---
 def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_cliente="", descuento_porcentaje=0, localidad_cliente=""):
     nombre_archivo = f"Boleta_{id_boleta}.pdf"
