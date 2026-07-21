@@ -45,6 +45,44 @@
             </div>
         </div>
 
+        <!-- SECCIÓN / TABLA DE PROVEEDORES -->
+<div class="card mt-4 shadow-sm">
+  <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">📋 Lista de Proveedores Registrados</h5>
+    <!-- Botón que abre el modal para agregar nuevo proveedor -->
+    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalProveedor">
+      + Nuevo Proveedor
+    </button>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre / Razon Social</th>
+            <th>Contacto / Teléfono</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for prov in proveedores %}
+            <tr>
+              <td><strong>#{{ prov[0] }}</strong></td>
+              <td>{{ prov[1] }}</td>
+              <td>{{ prov[2] if prov[2] else 'Sin contacto' }}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="3" class="text-center text-muted py-3">
+                No hay proveedores registrados aún.
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
         <!-- CARGAR PRODUCTO CON MARGEN -->
         <div class="card mb-4 shadow-sm border-primary">
             <div class="card-header bg-primary text-white">
