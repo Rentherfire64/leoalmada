@@ -29,7 +29,7 @@ DB_PATH = os.path.join(BASE_DIR, 'database.db')
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 
 
-# --- INICIALIZACIÓN DE LA BASE DE DATOS (EJECUCIÓN INMEDIATA PARA PRODUCTION/RENDER) ---
+# --- INICIALIZACIÓN DE LA BASE DE DATOS ---
 def inicializar_db():
     conexion = sqlite3.connect(DB_PATH)
     cursor = conexion.cursor()
@@ -97,7 +97,6 @@ def inicializar_db():
     conexion.commit()
     conexion.close()
 
-# Ejecutar la creación de tablas SIEMPRE al iniciar la app en Render
 inicializar_db()
 
 
@@ -114,11 +113,9 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     style_linea_punteada = ParagraphStyle('Punteada', parent=styles['Normal'], fontSize=10, leading=14, textColor=colors.HexColor("#2d3748"))
     style_tabla_header = ParagraphStyle('TH', parent=styles['Normal'], fontSize=10, fontName="Helvetica-Bold", textColor=colors.white, alignment=1)
     
-    # Formato de fecha del talonario
     now = datetime.now()
     fecha_formateada = f"Fecha...{now.strftime('%d')}.../...{now.strftime('%m')}.../......{now.strftime('%Y')}......"
     
-    # Formato de número de boleta a 8 dígitos
     if isinstance(id_boleta, int):
         num_boleta_str = f"{id_boleta:08d}"
     elif str(id_boleta).isdigit():
@@ -131,7 +128,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     else:
         ruta_logo = os.path.join(BASE_DIR, 'logo.jpg')
         
-    # --- COLUMNA IZQUIERDA (LOGO + CONTACTO AL LADO) ---
     if os.path.exists(ruta_logo):
         img_aux = Image(ruta_logo)
         ancho_real = img_aux.imageWidth
@@ -156,7 +152,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
             Paragraph("<font size=9><b>📞 11-6871-6551<br/>📞 11-6493-8355</b><br/><font color='#2d3748'>materiales<b>online</b>.ar</font></font>", style_normal)
         ]
 
-    # --- COLUMNA DERECHA ---
     columna_derecha = [
         Paragraph("presupuesto", ParagraphStyle('TipoDoc', parent=styles['Normal'], fontSize=18, fontName="Helvetica-Bold", leading=20, alignment=1, textColor=colors.black)),
         Spacer(1, 2),
@@ -176,7 +171,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     story.append(t_header)
     story.append(Spacer(1, 12))
     
-    # --- DATOS CLIENTE ---
     destino_texto = destino if destino else ""
     tel_texto = telefono_cliente if telefono_cliente else ""
     loc_texto = localidad_cliente if localidad_cliente else ""
@@ -198,7 +192,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
     story.append(t_cliente)
     story.append(Spacer(1, 12))
     
-    # --- TABLA ITEMS ---
     tabla_items_data = [[
         Paragraph("cantidad", style_tabla_header),
         Paragraph("detalle", style_tabla_header),
@@ -233,7 +226,6 @@ def generar_pdf_boleta(id_boleta, cliente, destino, total, items, telefono_clien
         tabla_items_data.append(["", "", Paragraph("Subtotal:", ParagraphStyle('SubTxt', parent=style_normal, alignment=2)), Paragraph(f"${subtotal_antes:,.2f}", ParagraphStyle('SubNum', parent=style_normal, alignment=2))])
         tabla_items_data.append(["", "", Paragraph(f"Desc. {descuento_porcentaje}%:", ParagraphStyle('DescTxt', parent=style_normal, alignment=2)), Paragraph(f"-${descuento_monto:,.2f}", ParagraphStyle('DescNum', parent=style_normal, alignment=2, textColor=colors.HexColor("#e53e3e")))])
 
-    # Nota de Devolución
     tabla_items_data.append([Paragraph("DEVOLUCIÓN DE BOLSÓN DENTRO DE LOS 20 DÍAS CON SU RESPECTIVA SEÑA. FECHA ENTREGA", ParagraphStyle('Notita', parent=styles['Normal'], fontSize=6.5, fontName="Helvetica-Bold")), "", Paragraph("<b>TOTAL:</b>", ParagraphStyle('TotalTxt', parent=style_normal, alignment=2)), Paragraph(f"<b>${total:,.2f}</b>", ParagraphStyle('TotalNum', parent=style_normal, fontSize=11, alignment=2, textColor=colors.black))])
     
     alturas_filas = [22] + [32] * (len(items) + max(0, filas_vacias))
@@ -324,6 +316,7 @@ def emitir_boleta():
 def inicio():
     return render_template('index.html')
 
+# --- RUTA DE PRODUCTOS Y PROVEEDORES (CORREGIDA CON CONTACTO) ---
 @app.route('/productos')
 def administrar_productos():
     conexion = sqlite3.connect(DB_PATH)
@@ -336,7 +329,8 @@ def administrar_productos():
     ''')
     lista_productos = cursor.fetchall()
     
-    cursor.execute("SELECT id, nombre FROM proveedores ORDER BY nombre")
+    # Se añade la columna 'contacto' en la consulta SQL de proveedores
+    cursor.execute("SELECT id, nombre, contacto FROM proveedores ORDER BY nombre")
     lista_proveedores = cursor.fetchall()
     conexion.close()
     return render_template('productos.html', productos=lista_productos, proveedores=lista_proveedores)
