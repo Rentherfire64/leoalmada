@@ -3,168 +3,787 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leo Almada | Blog & Personal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Panel de Control - Materiales Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        body {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.15rem;
+        }
+
+        #live-clock {
+            color: #ffff00 !important;
+            font-weight: bold !important;
+            font-size: 1.3rem !important;
+            text-shadow: 0 0 8px rgba(255, 255, 0, 0.5);
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 2.5rem 0;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none !important;
+            color: #ffffff !important; 
+            transition: all 0.3s ease;
+            width: 105px;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .circle-icon {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.3rem;
+            margin-bottom: 0.7rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .color-venta { 
+            color: #00ff88 !important; 
+            background-color: rgba(0, 255, 136, 0.2) !important; 
+            border: 4px solid #00ff88 !important; 
+        }
+        .color-clientes { 
+            color: #3b82f6 !important; 
+            background-color: rgba(59, 130, 246, 0.2) !important; 
+            border: 4px solid #3b82f6 !important; 
+        }
+        .color-productos { 
+            color: #ec4899 !important; 
+            background-color: rgba(236, 72, 153, 0.2) !important; 
+            border: 4px solid #ec4899 !important; 
+        }
+        .color-acopio { 
+            color: #eab308 !important; 
+            background-color: rgba(234, 179, 8, 0.2) !important; 
+            border: 4px solid #eab308 !important; 
+        }
+        .color-afip { 
+            color: #ef4444 !important; 
+            background-color: rgba(239, 68, 68, 0.2) !important; 
+            border: 4px solid #ef4444 !important; 
+        }
+
+        .menu-item:hover .circle-icon {
+            box-shadow: 0 0 30px currentColor !important;
+            filter: brightness(1.3);
+        }
+
+        .menu-label {
+            font-size: 1rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #ffffff !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .dark-card {
+            background-color: #12121a !important;
+            border: 2px solid #3d3d5c !important;
+            border-radius: 16px;
+        }
+
+        .text-muted-custom {
+            color: #cbd5e0 !important;
+            font-weight: bold !important;
+        }
+
+        .form-label {
+            font-size: 1.1rem !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+        .form-control, .form-select {
+            background-color: #000000 !important;
+            border: 2px solid #5a5a8a !important;
+            color: #ffffff !important;
+            font-size: 1.2rem !important;
+            padding: 10px 15px !important;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #00ff88 !important;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5) !important;
+        }
+
+        .table-dark-custom {
+            background-color: #12121a !important;
+            color: #ffffff !important;
+            font-size: 1.15rem !important;
+        }
+        .table-dark-custom th {
+            background-color: #1a1a26 !important;
+            border-bottom: 3px solid #3b82f6 !important;
+            color: #3b82f6 !important;
+            font-weight: bold !important;
+        }
+        .table-dark-custom td {
+            background-color: #12121a !important;
+            color: #ffffff !important;
+            border-bottom: 1px solid #2e2e42 !important;
+        }
+
+        .modal-content-custom {
+            background-color: #12121a !important;
+            border: 3px solid #eab308 !important;
+            color: #ffffff !important;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 selection:bg-blue-100 selection:text-blue-600">
+<body>
 
-    <header class="sticky top-0 z-50 glass border-b border-slate-200">
-        <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
-                <span class="font-extrabold tracking-tighter text-xl">LEO ALMADA</span>
+    <div class="container py-4">
+        <!-- CABECERA -->
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3 border-secondary">
+            <div>
+                <h1 class="fw-bold text-white mb-0" style="font-size: 2.5rem;">
+                    <i class="fas fa-building text-primary me-2"></i> Materiales Online
+                </h1>
             </div>
-            <ul class="flex gap-6 text-sm font-semibold text-slate-600">
-                <li><a href="index.html" class="text-blue-600">Inicio</a></li>
-                <li><a href="mio.html" class="hover:text-blue-600 transition">Acerca de mí</a></li>
-                <li>
-                    <button onclick="abrirModal()" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition text-sm flex items-center gap-2">
-                        <i class="fas fa-lock text-xs"></i> Área Clientes
-                    </button>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-6 py-12">
-        
-        <div class="mb-16 p-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl">
-            <div class="bg-white p-8 rounded-[14px] text-center">
-                <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full uppercase tracking-widest">Aviso</span>
-                <h1 class="text-4xl font-black mt-4 mb-2 tracking-tight">Sitio en Mantenimiento</h1>
-                <p class="text-slate-500">Estamos trabajando para ofrecerte una mejor experiencia educativa y digital.</p>
+            <div class="text-end">
+                <p class="mb-0" id="live-clock"></p>
             </div>
         </div>
 
-        <section id="introduccion" class="mb-20 text-center md:text-left">
-            <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 justify-center md:justify-start">
-                <span class="w-10 h-1 text-blue-600 bg-blue-600 rounded-full hidden md:block"></span>
-                ¡Hola a todos!
-            </h2>
-            <p class="text-xl text-slate-600 leading-relaxed max-w-2xl">
-                Bienvenidos a mi nuevo espacio digital. Aquí compartiré pensamientos sobre 
-                <span class="text-slate-900 font-semibold underline decoration-blue-500">docencia</span>, 
-                proyectos de <span class="text-slate-900 font-semibold underline decoration-green-500">desarrollo web</span> 
-                y mucho más.
-            </p>
-        </section>
-
-        <section id="ultimo-post">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-extrabold tracking-tight">Mi Última Publicación</h2>
-                <a href="#" class="text-sm font-bold text-blue-600 hover:underline">Ver todas →</a>
+        <!-- MENÚ DE ICONOS -->
+        <div class="menu-container">
+            <div class="menu-item" onclick="mostrarSeccion('seccion-ventas')">
+                <div class="circle-icon color-venta">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="menu-label">Venta</div>
             </div>
 
-            <article class="group relative bg-white border border-slate-200 p-8 rounded-3xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <p class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-2">Desarrollo & Educación</p>
-                        <h3 class="text-2xl font-bold group-hover:text-blue-600 transition-colors">Título del Post: El futuro de la tecnología en el aula</h3>
-                        <p class="mt-3 text-slate-500 leading-relaxed">
-                            Un breve adelanto de lo que estaré compartiendo próximamente en este blog personal...
-                        </p>
+            <a href="/clientes" class="menu-item">
+                <div class="circle-icon color-clientes">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="menu-label">Clientes</div>
+            </a>
+
+            <a href="/productos" class="menu-item">
+                <div class="circle-icon color-productos">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div class="menu-label">Productos</div>
+            </a>
+
+            <div class="menu-item" onclick="abrirModalAcopioRapido()">
+                <div class="circle-icon color-acopio">
+                    <i class="fas fa-warehouse"></i>
+                </div>
+                <div class="menu-label">Acopio</div>
+            </div>
+
+            <a href="https://auth.afip.gob.ar/contribuyente_/login.xhtml" target="_blank" class="menu-item">
+                <div class="circle-icon color-afip">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="menu-label">AFIP</div>
+            </a>
+        </div>
+
+        <!-- PANEL DE VENTA -->
+        <div id="seccion-ventas" class="card dark-card shadow mb-4">
+            <div class="card-header bg-dark border-0 text-white d-flex justify-content-between align-items-center py-3" style="border-radius: 16px 16px 0 0; border-bottom: 2px solid #2e2e42 !important;">
+                <h4 class="mb-0 text-uppercase fw-bold text-success"><i class="fas fa-file-invoice-dollar me-2"></i> Armador de Venta / Boleta</h4>
+                <span class="badge bg-primary fs-5 px-3 py-2" id="items-count">0 artículos</span>
+            </div>
+            <div class="card-body p-4">
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-5">
+                        <label class="form-label">Cliente (Escribí para buscar o registrar)</label>
+                        <input type="text" id="cliente-nombre" list="lista-clientes-datalist" class="form-control" placeholder="Ej: Juan Pérez" onchange="detectarClienteSeleccionado()" required>
+                        <datalist id="lista-clientes-datalist"></datalist>
                     </div>
-                    <div class="shrink-0">
-                        <p class="fecha text-sm font-medium text-slate-400 bg-slate-50 px-4 py-2 rounded-xl inline-block">
-                            <i class="far fa-calendar-alt mr-2"></i>3/12/2025
-                        </p>
+                    <div class="col-md-4">
+                        <label class="form-label">Teléfono de Contacto</label>
+                        <input type="text" id="cliente-telefono" class="form-control" placeholder="Ej: 1168716551">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Localidad</label>
+                        <input type="text" id="cliente-localidad" class="form-control" placeholder="Ej: Ituzaingó">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Destino de Entrega / Obra</label>
+                        <input type="text" id="cliente-destino" class="form-control" placeholder="Dirección completa de envío...">
                     </div>
                 </div>
-                <div class="mt-6 pt-6 border-t border-slate-100 flex items-center text-blue-600 font-bold text-sm">
-                    Leer más <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-2"></i>
-                </div>
-            </article>
-        </section>
-    </main>
 
-    <footer class="mt-20 border-t border-slate-200 py-12 bg-white">
-        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-slate-500 text-sm font-medium">
-                &copy; 2025 <span class="text-slate-900 font-bold">Leo Almada</span>. Todos los derechos reservados.
-            </p>
-            <div class="flex gap-6">
-                <a href="#" class="text-slate-400 hover:text-blue-600 transition text-xl"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="text-slate-400 hover:text-slate-900 transition text-xl"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-slate-400 hover:text-red-500 transition text-xl"><i class="fas fa-envelope"></i></a>
+                <div class="p-4 bg-black rounded border border-secondary mb-4">
+                    <div class="row g-2 align-items-end">
+                        <div class="col-md-9">
+                            <label class="form-label text-info fw-bold">Buscar Material (Escribí nombre o código corto):</label>
+                            <input type="text" id="buscador-tabla" list="lista-productos-datalist" class="form-control" placeholder="🔍 Escribí Cemento, Arena, Ladrillo..." onkeypress="detectarEnterProducto(event)">
+                            <datalist id="lista-productos-datalist"></datalist>
+                        </div>
+                        <div class="col-md-3 d-grid">
+                            <button type="button" class="btn btn-primary btn-lg fw-bold fs-5 py-2" onclick="agregarProductoPorBuscador()"><i class="fas fa-plus"></i> Añadir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-dark-custom align-middle">
+                        <thead>
+                            <tr>
+                                <th>Detalle del Material</th>
+                                <th style="width: 15%;">Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Subtotal</th>
+                                <th class="text-center">Quitar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo-boleta"></tbody>
+                    </table>
+                </div>
+
+                <div class="row g-3 p-4 bg-black rounded border border-secondary mb-4 align-items-center">
+                    <div class="col-md-4">
+                        <label class="form-label">Método de Pago</label>
+                        <select id="tipo-pago" class="form-select fw-bold">
+                            <option value="Efectivo">Efectivo / Contado</option>
+                            <option value="Cuenta Corriente">Cargar a Cuenta Corriente (Fiado)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label text-danger">Aplicar Descuento Especial</label>
+                        <select id="descuento-multiplo" class="form-select text-danger fw-bold" onchange="actualizarInterfazBoleta()">
+                            <option value="0">Sin Descuento (0%)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex flex-column gap-2 pt-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="check-guardar-registro" checked>
+                            <label class="form-check-label fw-bold text-white" for="check-guardar-registro">💾 Guardar todo en Base de Datos</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="check-descontar-stock">
+                            <label class="form-check-label fw-bold text-warning" for="check-descontar-stock">📦 Descontar Stock automáticamente</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center border border-secondary rounded p-4 mb-4 bg-black">
+                    <h2 class="mb-0 fw-bold text-white" style="font-size: 1.6rem;">TOTAL FINAL:</h2>
+                    <h1 class="text-success fw-bold mb-0" id="total-boleta" style="font-size: 3rem; text-shadow: 0 0 10px rgba(40, 167, 69, 0.4);">$0.00</h1>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-12 d-grid">
+                        <button class="btn btn-success btn-lg fw-bold py-3 fs-3" onclick="procesarEmisionUnificada()">
+                            <i class="fas fa-file-invoice-dollar me-2"></i> GENERAR COMPROBANTE / BOLETA
+                        </button>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button class="btn btn-outline-danger btn-md fw-bold" onclick="limpiarBoleta()">Limpiar Todo e Iniciar de Nuevo</button>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </footer>
-    <div id="modalClave" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-slate-200">
-        <div class="text-center mb-6">
-            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-user-tie text-xl"></i>
-            </div>
-            <h2 class="text-xl font-bold text-slate-900">Acceso Profesional</h2>
-            <p class="text-sm text-slate-500 mt-1">Ingresa la clave para ver el portfolio de servicios.</p>
-        </div>
-        
-        <input type="password" id="inputClave" 
-               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all mb-4 text-center tracking-widest"
-               placeholder="········">
-        
-        <div class="flex flex-col gap-2">
-            <button onclick="validarClave()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">
-                Entrar al Portfolio
-            </button>
-            <button onclick="cerrarModal()" class="w-full text-slate-400 text-sm font-semibold py-2 hover:text-slate-600">
-                Cancelar
-            </button>
-        </div>
-        <p id="errorTexto" class="text-red-500 text-xs font-bold mt-4 text-center hidden">Clave incorrecta. Inténtalo de nuevo.</p>
     </div>
-</div>
-</body>
-<script>
-    const modal = document.getElementById('modalClave');
-    const input = document.getElementById('inputClave');
-    const error = document.getElementById('errorTexto');
 
-    function abrirModal() {
-        modal.classList.remove('hidden');
-        input.focus();
-    }
+    <!-- MODAL DE ACOPIO RÁPIDO CON HISTORIAL -->
+    <div class="modal fade" id="modalAcopioRapido" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header border-secondary">
+                    <h4 class="modal-title text-warning fw-bold"><i class="fas fa-warehouse me-2"></i> Control de Acopio Rápido</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Seleccione un Cliente Registrado</label>
+                        <select id="select-cliente-acopio" class="form-select" onchange="actualizarVistaAcopioRapido(this.value)">
+                            <option value="" disabled selected>--- Elegir Cliente ---</option>
+                        </select>
+                    </div>
+                    <div id="cuerpo-acopio-rapido" style="display: none;">
+                        <div class="p-3 bg-white text-dark rounded mb-4 border border-secondary">
+                            <h6 class="fw-bold text-dark fs-5 mb-2"><i class="fas fa-plus"></i> Cargar nuevo material al acopio</h6>
+                            <div class="row g-2">
+                                <div class="col-md-7">
+                                    <select id="acopio-prod-select" class="form-select text-dark bg-light border-dark"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" id="acopio-cant-cargar" class="form-control text-dark bg-light border-dark" placeholder="Cant." min="1">
+                                </div>
+                                <div class="col-md-2 d-grid">
+                                    <button class="btn btn-success fw-bold" onclick="guardarAcopioRapido()"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
 
-    function cerrarModal() {
-        modal.classList.add('hidden');
-        input.value = '';
-        error.classList.add('hidden');
-    }
+                        <h5 class="fw-bold text-warning mb-2"><i class="fas fa-boxes"></i> Materiales Pendientes de Entrega:</h5>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-dark-custom table-bordered align-middle">
+                                <thead class="table-active">
+                                    <tr>
+                                        <th>Material</th>
+                                        <th class="text-center">Stock Acopiado</th>
+                                        <th class="text-center">Retirar Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-acopios-cuerpo"></tbody>
+                            </table>
+                        </div>
 
-    function validarClave() {
-        // AQUÍ ELIGES TU CLAVE
-        const claveSecreta = "LeoVentas2026"; 
+                        <!-- DESPLEGABLE DE HISTORIAL DE ACOPIO -->
+                        <div class="border-top border-secondary pt-3">
+                            <button class="btn btn-outline-info fw-bold w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHistorialAcopio" onclick="cargarHistorialAcopioModal()">
+                                📜 Ver Historial Cronológico de Movimientos
+                            </button>
+                            <div class="collapse" id="collapseHistorialAcopio">
+                                <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                                    <table class="table table-sm table-dark-custom align-middle text-center small mb-0">
+                                        <thead>
+                                            <tr class="table-secondary text-dark">
+                                                <th>Fecha y Hora</th>
+                                                <th>Material</th>
+                                                <th>Acción</th>
+                                                <th>Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-historial-acopio-cuerpo">
+                                            <tr><td colspan="4" class="text-muted text-center">Seleccione un movimiento.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-        if (input.value === claveSecreta) {
-            // Si es correcta, redirige al archivo de ventas
-            window.location.href = "portfolio.html";
-        } else {
-            // Si es incorrecta, muestra error
-            error.classList.remove('hidden');
-            input.classList.add('border-red-500');
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DE CONTROL -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let productosDisponibles = [];
+        let listaClientesGlobal = [];
+        let boletaActual = [];
+        let idClienteSeleccionadoCC = null;
+        let idClienteAcopioRapido = null;
+
+        function mostrarSeccion(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cargarDesplegableDescuentos() {
+            const select = document.getElementById('descuento-multiplo');
+            select.innerHTML = '<option value="0">Sin Descuento (0%)</option>';
+            for (let i = 1; i <= 15; i++) {
+                let opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = `Descuento del ${i}%`;
+                select.appendChild(opt);
+            }
+        }
+
+        async function cargarDatosIniciales() {
+            try {
+                cargarDesplegableDescuentos();
+                
+                const resProd = await fetch('/api/get-productos');
+                productosDisponibles = await resProd.json();
+                
+                const resCli = await fetch('/api/get-clientes-activos');
+                listaClientesGlobal = await resCli.json();
+                
+                generarDatalistClientes();
+                generarDatalistProductos();
+                
+                const selectAcopio = document.getElementById('select-cliente-acopio');
+                selectAcopio.innerHTML = '<option value="" disabled selected>--- Elegir Cliente ---</option>';
+                listaClientesGlobal.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.innerText = c.nombre;
+                    selectAcopio.appendChild(opt);
+                });
+
+                const selectProdAcopio = document.getElementById('acopio-prod-select');
+                selectProdAcopio.innerHTML = '<option value="" disabled selected>Elegir material...</option>';
+                productosDisponibles.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.innerText = p.descripcion;
+                    selectProdAcopio.appendChild(opt);
+                });
+            } catch (error) {
+                console.error("Error al cargar los datos de la API:", error);
+            }
+        }
+
+        function generarDatalistClientes() {
+            const datalist = document.getElementById('lista-clientes-datalist');
+            datalist.innerHTML = '';
+            listaClientesGlobal.forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.nombre;
+                datalist.appendChild(option);
+            });
+        }
+
+        function detectarClienteSeleccionado() {
+            const nombreEscrito = document.getElementById('cliente-nombre').value.trim();
+            const clienteEncontrado = listaClientesGlobal.find(c => c.nombre.toLowerCase() === nombreEscrito.toLowerCase());
+            if (clienteEncontrado) {
+                idClienteSeleccionadoCC = clienteEncontrado.id;
+                document.getElementById('cliente-destino').value = clienteEncontrado.obra || '';
+                document.getElementById('cliente-telefono').value = clienteEncontrado.telefono || '';
+            } else {
+                idClienteSeleccionadoCC = null;
+            }
+        }
+
+        function generarDatalistProductos() {
+            const datalist = document.getElementById('lista-productos-datalist');
+            datalist.innerHTML = '';
+            productosDisponibles.forEach(p => {
+                const option = document.createElement('option');
+                if (p.codigo && p.codigo.trim() !== "" && p.codigo !== "None") {
+                    option.value = `[Cod ${p.codigo}] ${p.descripcion} ($${p.precio.toFixed(2)})`;
+                } else {
+                    option.value = `${p.descripcion} ($${p.precio.toFixed(2)})`;
+                }
+                option.dataset.id = p.id;
+                datalist.appendChild(option);
+            });
+        }
+
+        function agregarProductoPorBuscador() {
+            const input = document.getElementById('buscador-tabla');
+            const valorSeleccionado = input.value.trim();
+            if (!valorSeleccionado) return;
+
+            let idEncontrado = null;
+            const opciones = document.getElementById('lista-productos-datalist').options;
+            for (let i = 0; i < opciones.length; i++) {
+                if (opciones[i].value === valorSeleccionado) {
+                    idEncontrado = opciones[i].dataset.id;
+                    break;
+                }
+            }
+
+            if (!idEncontrado) {
+                const coincidenciaCodigo = productosDisponibles.find(p => p.codigo && p.codigo.trim() === valorSeleccionado);
+                if (coincidenciaCodigo) idEncontrado = coincidenciaCodigo.id;
+            }
+
+            if (!idEncontrado) {
+                const coincidenciaExactaDesc = productosDisponibles.find(p => p.descripcion.toLowerCase() === valorSeleccionado.toLowerCase());
+                if (coincidenciaExactaDesc) idEncontrado = coincidenciaExactaDesc.id;
+            }
+
+            if (idEncontrado) {
+                const producto = productosDisponibles.find(p => p.id == idEncontrado);
+                if (producto) {
+                    agregarALaBoleta(producto);
+                    input.value = '';
+                    input.focus();
+                }
+            } else {
+                alert("Seleccione un material válido del listado.");
+                input.focus();
+            }
+        }
+
+        function detectarEnterProducto(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                agregarProductoPorBuscador();
+            }
+        }
+
+        function agregarALaBoleta(producto) {
+            const existe = boletaActual.find(item => item.id === producto.id);
+            if (existe) {
+                existe.cantidad++;
+            } else {
+                boletaActual.push({ id: producto.id, descripcion: producto.descripcion, precio: producto.precio, cantidad: 1 });
+            }
+            actualizarInterfazBoleta();
+        }
+
+        function cambiarCantidad(id, nuevaCant) {
+            const item = boletaActual.find(i => i.id == id);
+            if (item) {
+                let cantFlotante = parseFloat(nuevaCant);
+                if (isNaN(cantFlotante) || cantFlotante <= 0) cantFlotante = 1;
+                item.cantidad = cantFlotante;
+                actualizarInterfazBoleta();
+            }
+        }
+
+        function eliminarItem(id) {
+            boletaActual = boletaActual.filter(i => i.id != id);
+            actualizarInterfazBoleta();
+        }
+
+        function actualizarInterfazBoleta() {
+            const cuerpo = document.getElementById('cuerpo-boleta');
+            cuerpo.innerHTML = '';
+            let total = 0;
+
+            boletaActual.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td class="text-white fw-bold">${item.descripcion}</td>
+                    <td><input type="number" class="form-control text-center fw-bold text-white bg-black" value="${item.cantidad}" min="0.5" step="0.5" onchange="cambiarCantidad('${item.id}', this.value)"></td>
+                    <td class="text-white fw-bold">$${item.precio.toFixed(2)}</td>
+                    <td class="text-success fw-bold" style="font-size: 1.3rem;">$${subtotal.toFixed(2)}</td>
+                    <td class="text-center"><button class="btn btn-danger fw-bold py-1 px-3" onclick="eliminarItem('${item.id}')">Quitar</button></td>
+                `;
+                cuerpo.appendChild(fila);
+            });
+
+            const descPorcentaje = parseInt(document.getElementById('descuento-multiplo').value) || 0;
+            if (descPorcentaje > 0 && total > 0) {
+                total = total - (total * (descPorcentaje / 100));
+            }
+
+            document.getElementById('total-boleta').innerText = `$${total.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('items-count').innerText = `${boletaActual.length} artículos`;
+        }
+
+        function limpiarBoleta() {
+            boletaActual = [];
+            document.getElementById('cliente-nombre').value = '';
+            document.getElementById('cliente-destino').value = '';
+            document.getElementById('cliente-telefono').value = '';
+            document.getElementById('cliente-localidad').value = '';
+            document.getElementById('buscador-tabla').value = '';
+            document.getElementById('descuento-multiplo').value = '0';
+            document.getElementById('tipo-pago').value = 'Efectivo';
+            detectarClienteSeleccionado();
+            actualizarInterfazBoleta();
+        }
+
+        function abrirModalAcopioRapido() {
+            const modal = new bootstrap.Modal(document.getElementById('modalAcopioRapido'));
+            modal.show();
+        }
+
+        async function actualizarVistaAcopioRapido(idCliente) {
+            if (!idCliente) return;
+            idClienteAcopioRapido = idCliente;
+            document.getElementById('cuerpo-acopio-rapido').style.display = 'block';
+            await renderizarTablaAcopioRapido();
             
-            // Efecto de sacudida (opcional)
-            input.classList.add('animate-bounce');
-            setTimeout(() => {
-                input.classList.remove('animate-bounce');
-            }, 500);
+            // Ocultar historial al cambiar de cliente
+            const collapseElem = document.getElementById('collapseHistorialAcopio');
+            if (collapseElem && collapseElem.classList.contains('show')) {
+                const bsCollapse = bootstrap.Collapse.getInstance(collapseElem);
+                if (bsCollapse) bsCollapse.hide();
+            }
         }
-    }
 
-    // Permitir entrar presionando la tecla "Enter"
-    input.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            validarClave();
+        async function renderizarTablaAcopioRapido() {
+            try {
+                const res = await fetch(`/api/obtener-acopio/${idClienteAcopioRapido}`);
+                const acopios = await res.json();
+                const cuerpo = document.getElementById('tabla-acopios-cuerpo');
+                cuerpo.innerHTML = '';
+
+                if (acopios.length === 0) {
+                    cuerpo.innerHTML = `<tr><td colspan="3" class="text-center text-light py-3 fs-5">Sin materiales acopiados para este cliente.</td></tr>`;
+                    return;
+                }
+
+                acopios.forEach(item => {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td class="text-white fw-bold fs-5">${item.descripcion}</td>
+                        <td class="text-center"><span class="badge bg-warning text-dark fs-5 fw-bold px-3 py-2">${item.cantidad}</span></td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" id="retirar-cant-${item.id_acopio}" class="form-control text-center text-dark bg-light fw-bold" min="0.5" step="0.5" max="${item.cantidad}" placeholder="Cant." style="font-size: 1.2rem;">
+                                <button class="btn btn-warning fw-bold text-dark fs-5" onclick="ejecutarRetiroRapido('${item.id_acopio}', ${item.cantidad})">Retirar</button>
+                            </div>
+                        </td>
+                    `;
+                    cuerpo.appendChild(fila);
+                });
+            } catch (error) {
+                console.error("Error al renderizar la tabla de acopio:", error);
+            }
         }
-    });
-</script>
+
+        async function guardarAcopioRapido() {
+            const idProd = document.getElementById('acopio-prod-select').value;
+            const cantidad = parseFloat(document.getElementById('acopio-cant-cargar').value);
+
+            if (!idProd || isNaN(cantidad) || cantidad <= 0) return;
+
+            try {
+                const res = await fetch('/api/cargar-acopio', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_cliente: idClienteAcopioRapido, id_producto: idProd, cantidad: cantidad })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    document.getElementById('acopio-cant-cargar').value = '';
+                    await renderizarTablaAcopioRapido();
+                    await cargarHistorialAcopioModal();
+                }
+            } catch (error) {
+                console.error("Error al cargar acopio:", error);
+            }
+        }
+
+        async function ejecutarRetiroRapido(idAcopio, stockDisponible) {
+            const input = document.getElementById(`retirar-cant-${idAcopio}`);
+            const cant = parseFloat(input.value);
+
+            if (isNaN(cant) || cant <= 0 || cant > stockDisponible) {
+                alert("Cantidad no válida.");
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/retirar-acopio', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_acopio: idAcopio, cantidad: cant })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    alert("Retiro completado!");
+                    await renderizarTablaAcopioRapido();
+                    await cargarHistorialAcopioModal();
+                }
+            } catch (error) {
+                console.error("Error al retirar acopio:", error);
+            }
+        }
+
+        // --- FUNCIÓN DEL HISTORIAL DE ACOPIO EN MODAL ---
+        async function cargarHistorialAcopioModal() {
+            if (!idClienteAcopioRapido) return;
+            
+            const res = await fetch(`/api/obtener-historial-acopio/${idClienteAcopioRapido}`);
+            const historial = await res.json();
+            const cuerpo = document.getElementById('tabla-historial-acopio-cuerpo');
+            if (!cuerpo) return;
+
+            cuerpo.innerHTML = '';
+
+            if (historial.length === 0) {
+                cuerpo.innerHTML = '<tr><td colspan="4" class="text-muted text-center py-2">Sin movimientos registrados.</td></tr>';
+                return;
+            }
+
+            historial.forEach(h => {
+                const esCarga = h.tipo === 'CARGA';
+                const badgeClass = esCarga ? 'bg-success' : 'bg-warning text-dark';
+                const signo = esCarga ? '+' : '-';
+
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${h.fecha}</td>
+                    <td class="text-start fw-bold">${h.producto}</td>
+                    <td><span class="badge ${badgeClass}">${h.tipo}</span></td>
+                    <td class="fw-bold">${signo}${h.cantidad}</td>
+                `;
+                cuerpo.appendChild(fila);
+            });
+        }
+
+        function actualizarReloj() {
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) {
+                clockEl.innerText = new Date().toLocaleString('es-AR');
+            }
+        }
+
+        async function procesarEmisionUnificada() {
+            const cliente = document.getElementById('cliente-nombre').value.trim();
+            const destino = document.getElementById('cliente-destino').value.trim();
+            const telefonoCliente = document.getElementById('cliente-telefono').value.trim();
+            const localidadCliente = document.getElementById('cliente-localidad').value.trim();
+            const tipoPago = document.getElementById('tipo-pago').value;
+            const descPorcentaje = parseInt(document.getElementById('descuento-multiplo').value) || 0;
+            
+            const guardarRegistro = document.getElementById('check-guardar-registro').checked;
+            const descontarStock = document.getElementById('check-descontar-stock').checked;
+            
+            if (!cliente) { alert("Escribí el nombre del cliente."); return; }
+            if (boletaActual.length === 0) { alert("La lista de materiales está vacía."); return; }
+            
+            let subtotalOriginal = 0;
+            boletaActual.forEach(i => subtotalOriginal += (i.precio * i.cantidad));
+            let totalFinal = subtotalOriginal - (subtotalOriginal * (descPorcentaje / 100));
+
+            const payload = {
+                cliente: cliente, 
+                destino: destino,
+                telefono_cliente: telefonoCliente.replace(/\D/g, ""),
+                localidad_cliente: localidadCliente, 
+                items: boletaActual,
+                total: totalFinal, 
+                tipo_pago: tipoPago,
+                id_cliente_cc: idClienteSeleccionadoCC, 
+                descuento_porcentaje: descPorcentaje,
+                guardar_registro: guardarRegistro,
+                descontar_stock: descontarStock
+            };
+
+            try {
+                const respuesta = await fetch('/api/emitir-boleta', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const resultado = await respuesta.json();
+                if (resultado.status === 'success') {
+                    window.location.href = `/descargar-pdf/${resultado.archivo}`;
+                    if (resultado.guardado) {
+                        alert("¡Venta procesada y almacenada con éxito!");
+                    } else {
+                        alert("¡Comprobante temporal generado sin guardar registros!");
+                    }
+                    limpiarBoleta();
+                    cargarDatosIniciales();
+                }
+            } catch (error) {
+                alert("Error de comunicación con el servidor local.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarReloj();
+            setInterval(actualizarReloj, 1000);
+            cargarDatosIniciales();
+        });
+    </script>
+</body>
 </html>
-
-
-
