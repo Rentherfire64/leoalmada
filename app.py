@@ -29,10 +29,12 @@ DB_PATH = os.path.join(BASE_DIR, 'database.db')
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 
 
-# --- INICIALIZACIÓN DE LA BASE DE DATOS ---
+# --- INICIALIZACIÓN Y PRECARGA DE DATOS DE PRUEBA ---
 def inicializar_db():
     conexion = sqlite3.connect(DB_PATH)
     cursor = conexion.cursor()
+    
+    # 1. Creación de Tablas
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS proveedores (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -94,9 +96,55 @@ def inicializar_db():
             fecha TEXT NOT NULL
         )
     ''')
+    
+    # 2. Carga automática de datos iniciales (Solo si las tablas están vacías)
+    cursor.execute("SELECT COUNT(*) FROM proveedores")
+    if cursor.fetchone()[0] == 0:
+        proveedores_demo = [
+            ("Loma Negra S.A.", "11-4567-8901 (Ventas Directas)"),
+            ("Cantera Quilmes", "11-3344-5566 (Fletero Rodolfo)"),
+            ("Distribuidora de Hierros Sur", "11-9988-7766 (Oficina Central)")
+        ]
+        cursor.executemany("INSERT INTO proveedores (nombre, contacto) VALUES (?, ?)", proveedores_demo)
+
+    cursor.execute("SELECT COUNT(*) FROM clientes")
+    if cursor.fetchone()[0] == 0:
+        clientes_demo = [
+            ("Juan Pérez", "Obra Av. Mitre 1420", "1123456789", 0.0, 1),
+            ("Constructora Olivos SRL", "Edificio Calle Gorriti 450", "1165432109", 145000.0, 1),
+            ("Roberto Gómez", "Refacción Casa Ituzaingó", "1144556677", 0.0, 1)
+        ]
+        cursor.executemany("INSERT INTO clientes (nombre, obra, telefono, saldo_deuda, activo) VALUES (?, ?, ?, ?, ?)", clientes_demo)
+
+    cursor.execute("SELECT COUNT(*) FROM productos")
+    if cursor.fetchone()[0] == 0:
+        # Formato: (categoria, descripcion, precio_costo, porcentaje_ganancia, precio_venta, stock, unidad, codigo, id_proveedor)
+        productos_demo = [
+            ("Bolsas", "Cemento Loma Negra x 50kg", 7000.0, 35.0, 9450.0, 150.0, "Unidad", "10", 1),
+            ("Bolsas", "Cal Hidratada Cacique x 25kg", 3200.0, 40.0, 4480.0, 80.0, "Unidad", "11", 1),
+            ("Bolsas", "Plasticor x 40kg", 5500.0, 30.0, 7150.0, 100.0, "Unidad", "12", 1),
+            ("Ladrillos", "Ladrillo Hueco 12x18x33 (x Mil)", 220000.0, 30.0, 286000.0, 12.0, "Unidad", "20", 2),
+            ("Ladrillos", "Ladrillo Hueco 18x18x33 (x Mil)", 310000.0, 30.0, 403000.0, 8.0, "Unidad", "21", 2),
+            ("Ladrillos", "Ladrillo Común de Campo (x Mil)", 110000.0, 35.0, 148500.0, 15.0, "Unidad", "22", 2),
+            ("Áridos", "Arena Fina en Bolsón", 18000.0, 40.0, 25200.0, 25.0, "Unidad", "30", 2),
+            ("Áridos", "Piedra Partida 1-3 en Bolsón", 28000.0, 35.0, 37800.0, 18.0, "Unidad", "31", 2),
+            ("Áridos", "Cascote Picado en Bolsón", 14000.0, 40.0, 19600.0, 30.0, "Unidad", "32", 2),
+            ("Hierros", "Hierro del 8 mm (Barra 12m)", 8500.0, 30.0, 11050.0, 90.0, "Unidad", "40", 3),
+            ("Hierros", "Hierro del 10 mm (Barra 12m)", 13200.0, 30.0, 17160.0, 75.0, "Unidad", "41", 3),
+            ("Hierros", "Hierro del 12 mm (Barra 12m)", 19000.0, 30.0, 24700.0, 50.0, "Unidad", "42", 3),
+            ("Hierros", "Malla Sima 15x15 (2x3m) 4.2mm", 22000.0, 35.0, 29700.0, 40.0, "Unidad", "43", 3),
+            ("Bolsas", "Pegamento Klaukol x 30kg", 11500.0, 30.0, 14950.0, 60.0, "Unidad", "13", 1),
+            ("Áridos", "Medares / Malla de Polietileno", 4500.0, 45.0, 6525.0, 45.0, "Unidad", "33", 2)
+        ]
+        cursor.executemany('''
+            INSERT INTO productos (categoria, descripcion, precio_costo, porcentaje_ganancia, precio, stock, unidad_medida, codigo, id_proveedor)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', productos_demo)
+
     conexion.commit()
     conexion.close()
 
+# Ejecutar la creación e inserción al iniciar
 inicializar_db()
 
 
@@ -316,7 +364,6 @@ def emitir_boleta():
 def inicio():
     return render_template('index.html')
 
-# --- RUTA DE PRODUCTOS Y PROVEEDORES (CORREGIDA CON CONTACTO) ---
 @app.route('/productos')
 def administrar_productos():
     conexion = sqlite3.connect(DB_PATH)
@@ -329,7 +376,6 @@ def administrar_productos():
     ''')
     lista_productos = cursor.fetchall()
     
-    # Se añade la columna 'contacto' en la consulta SQL de proveedores
     cursor.execute("SELECT id, nombre, contacto FROM proveedores ORDER BY nombre")
     lista_proveedores = cursor.fetchall()
     conexion.close()
